@@ -1,34 +1,47 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var app = express()
-var cors = require('cors')
+'use strict';
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+const logger = require('morgan');
+const router = express.Router({ mergeParams: true });
+const port = process.env.PORT || 5100;
+const http = require('http');
+const cors = require('cors');
+const server = http.createServer(app);
+const setUp = require('./setup');
+require('./routes/Kendaraan')(router);
+require('./routes/User')(router);
+require('./routes/administrasi')(router);
+require('./routes/Transaksi')(router);
 app.use(cors())
-var mongoose = require('mongoose')
-var port = process.env.PORT || 5100
-var dbconfig = require('./config/DbConfig')
-
-mongoose.connect(dbconfig.mongoURL,{
-    useNewUrlParser:true
-}).then(() => console.log('connect mongodb'))
-.catch(err => console.log(err));
+app.options('*', cors())
+app.use(bodyParser.urlencoded({
+    enableTypes: ['json', 'form'], extended: true
+}))
 
 app.use(bodyParser.json({
-    extended: true,
-    limit: '50mb'
-}));
-
-app.use(bodyParser.urlencoded({
-    extended:true,
-    limit: '50mb'
-}));
-
-// include routes
-var Kendaraan = require("./routes/Kendaraan")
-app.use("/kendaraan",Kendaraan)
-
-var User = require("./routes/User")
-app.use("/user",User)
-
-app.listen(port,function(){
-    console.log("Server started on port "+ port)
-});
+    extended: true
+}))
+app.use(logger('dev'))
+app.use('/', router)
+server.listen(port)
+server.on('listening', onListening)
+async function onListening() {
+    try {
+        console.log('try to listen...')
+        var addr = server.address();
+        var bind = typeof addr === 'string'
+            ? 'pipe ' + addr
+            : 'port ' + addr.port;
+        setUp.dbConnect()
+        //app.database = database
+        console.log('Listening on ' + bind)
+        //debug('Listening on ' + bind);
+    } catch (error) {
+        console.log(error)
+        console.log('listen failed, try to reconnect in 5 secs...')
+        setTimeout(function () {
+            onListening()
+        }, 5000);
+    }
+}

@@ -32,9 +32,9 @@ const KendaraanScehma = new Schema({
     tempatPengujian: {
         type: String
     },
-    tanggalTidakBerlaku: {
+    tanggalTidakBerlaku: [{
         type: Date
-    },
+    }],
     namaPemilikKendaraan: {
         type: String
     },
@@ -42,16 +42,16 @@ const KendaraanScehma = new Schema({
         type: String
     },
     jarakSumbu: {
-        type: String
+        type: Number
     },
     panjangTotal: {
-        type: String
+        type: Number
     },
     lebarTotal: {
-        type: String
+        type: Number
     },
     tinggiTotal: {
-        type: String
+        type: Number
     },
     jenisKaroseri: {
         type: String
@@ -60,10 +60,10 @@ const KendaraanScehma = new Schema({
         type: String
     },
     jumlahTempatDuduk: {
-        type: String
+        type: Number
     },
     jumlahTempatBerdiri: {
-        type: String
+        type: Number
     },
     keterangan: {
         type: String
@@ -81,16 +81,16 @@ const KendaraanScehma = new Schema({
         type: JSON
     },
     dayaOrang: {
-        type: String
+        type: Number
     },
     dayaBarang: {
-        type: String
+        type: Number
     },
     jb: {
-        type: String
+        type: Number
     },
     mst: {
-        type: String
+        type: Number
     },
     // bans: [{
     //     ban: String
@@ -99,22 +99,22 @@ const KendaraanScehma = new Schema({
         type: JSON
     },
     roh: {
-        type: String
+        type: Number
     },
     foh: {
-        type: String
+        type: Number
     },
     pBak: {
-        type: String
+        type: Number
     },
     lBak: {
-        type: String
+        type: Number
     },
     tBak: {
-        type: String
+        type: Number
     },
     vSil: {
-        type: String
+        type: Number
     },
     date: {
         type: Date
@@ -140,4 +140,4 @@ const KendaraanScehma = new Schema({
     }
 })
 
-module.exports = mongoose.model('kendaraan', KendaraanScehma)
+module.exports = mongoose.model('e_kendaraan', KendaraanScehma)
