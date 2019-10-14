@@ -1,11 +1,13 @@
 const kendaraanController = require('../controller/KendaraanController')
+const transaksi = require('../controller/Transaksi')
 module.exports = router => {
     router.post('/kendaraan/simpandata', async (req, res) => {
         // console.log(req.body)
-        kendaraanController.postKendaraan(req.body)
-            .then((result) => {
-                res.json(result)
-                console.log(result)
+        await kendaraanController.postKendaraan(req.body.kendaraan)
+            .then(() => {
+                transaksi.createTransaksi(req.body.transaksi)
+                    .then(result => res.json(result))
+                    .catch(err => res.json(err))
             }).catch(err => {
                 res.json(err)
                 console.log(err)
@@ -14,15 +16,18 @@ module.exports = router => {
     })
 
     router.get('/kendaraan/get', async (req, res) => {
-        kendaraanController.getdata()
+        await kendaraanController.getdata()
             .then(result => {
                 res.json(result)
+            })
+            .catch(err => {
+                res.json(err)
             })
     })
 
     router.post('/kendaraan/search', async (req, res) => {
         console.log(req.body)
-        kendaraanController.getdataById(req.body)
+        await kendaraanController.getdataById(req.body)
             .then(result => {
                 res.json(result)
             })
@@ -32,7 +37,7 @@ module.exports = router => {
     })
 
     router.post('/kendaraan/getdataByDate', async (req, res) => {
-        kendaraanController.getdataByDate(req.body.start, req.body.end)
+        await kendaraanController.getdataByDate(req.body.start, req.body.end)
             .then(result => {
                 res.json(result)
             })
@@ -42,7 +47,7 @@ module.exports = router => {
     })
 
     router.get('/getdetail/:id', async (req, res) => {
-        kendaraanController.getdetail(req.params.id)
+        await kendaraanController.getdetail(req.params.id)
             .then(result => {
                 res.json(result)
             })
@@ -52,7 +57,7 @@ module.exports = router => {
     })
 
     router.post('/updatedata/:id', async (req, res) => {
-        kendaraanController.updatedata(req.body, req.params.id)
+        await kendaraanController.updatedata(req.body, req.params.id)
             .then(() => {
                 res.json({
                     error: false
@@ -65,7 +70,7 @@ module.exports = router => {
     })
 
     router.post('/delete/:id', async (req, res) => {
-        kendaraanController.delete(req.params.id)
+        await kendaraanController.delete(req.params.id)
             .then(() => {
                 res.json({ error: false })
             }).catch(() => {
