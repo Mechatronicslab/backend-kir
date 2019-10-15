@@ -1,5 +1,5 @@
 const config = require('./config/config.json')
-const mongodbUri = config['database']['production']['uri']
+const mongodbUri = config['database']['production']['local']
 const client = require('mongoose')
 
 const options = {

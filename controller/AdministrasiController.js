@@ -35,8 +35,3 @@ exports.getAdministrasi = async () =>
             .then(res => resolve(res))
             .catch(err => reject(requestResponse.common_error))
     })
-
-
-
-
-

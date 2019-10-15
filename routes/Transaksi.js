@@ -19,5 +19,17 @@ module.exports = router => {
             .then(result => res.json(result))
             .catch(err => res.json(err))
 
-    });
+    })
+
+    router.get('/cek/:id', async (req, res) => {
+        await controller.verfNumpangUji(req.params.id)
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
+    })
+
+    router.get('/transaksi/getall', async (req, res) => {
+        await controller.getAll(req.params.id)
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
+    })
 }

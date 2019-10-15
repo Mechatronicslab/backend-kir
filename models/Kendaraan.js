@@ -134,6 +134,18 @@ const KendaraanScehma = new Schema({
     umur: {
         type: String
     },
+    tampakDepan: {
+        type: String
+    },
+    tampakBelakang: {
+        type: String
+    },
+    tampakKanan: {
+        type: String
+    },
+    tampakKiri: {
+        type: String
+    },
     timeStamp: {
         default: new Date().toLocaleDateString(),
         type: Date

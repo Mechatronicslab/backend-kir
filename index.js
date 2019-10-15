@@ -7,12 +7,15 @@ const router = express.Router({ mergeParams: true });
 const port = process.env.PORT || 5100;
 const http = require('http');
 const cors = require('cors');
+const path =require('path')
 const server = http.createServer(app);
 const setUp = require('./setup');
 require('./routes/Kendaraan')(router);
 require('./routes/User')(router);
 require('./routes/administrasi')(router);
 require('./routes/Transaksi')(router);
+app.use("/static",express(path.join(__dirname,"static")))
+app.use(express.static('static'))
 app.use(cors())
 app.options('*', cors())
 app.use(bodyParser.urlencoded({

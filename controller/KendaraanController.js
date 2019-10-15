@@ -1,53 +1,18 @@
 const Kendaraan = require('../models/Kendaraan')
 const administrasi = require('../models/Administrasi')
+const transaksi = require('../models/Transaksi')
 const { requestResponse } = require('../setup')
 exports.postKendaraan = async (data) =>
     new Promise((resolve, reject) => {
         try {
-            Kendaraan.create({
-                noKendaraan: data.noKendaraan,
-                merk: data.merk,
-                type: data.type,
-                jenisPeruntukan: data.jenisPeruntukan,
-                tahunPembuatan: data.tahunPembuatan,
-                tahunPenggunaan: data.tahunPenggunaan,
-                nomorRangka: data.nomorRangka,
-                nomorMesin: data.nomorMesin,
-                nomorUji: data.nomorUji,
-                tempatPengujian: data.tempatPengujian,
-                tanggalTidakBerlaku: data.tanggalTidakBerlaku,
-                namaPemilikKendaraan: data.namaPemilikKendaraan,
-                alamatPerusahaan: data.alamatPerusahaan,
-                jarakSumbu: data.jarakSumbu,
-                panjangTotal: data.panjangTotal,
-                lebarTotal: data.lebarTotal,
-                tinggiTotal: data.tinggiTotal,
-                jenisKaroseri: data.jenisKaroseri,
-                bahanKaroseri: data.bahanKaroseri,
-                jumlahTempatDuduk: data.jumlahTempatDuduk,
-                jumlahTempatBerdiri: data.jumlahTempatBerdiri,
-                keterangan: data.keterangan,
-                jbbs: data.jbbs,
-                bkks: data.bkks,
-                dayaOrang: data.dayaOrang,
-                dayaBarang: data.dayaBarang,
-                jb: data.jb,
-                mst: data.mst,
-                bans: data.bans,
-                roh: data.roh,
-                foh: data.foh,
-                pBak: data.pBak,
-                lBak: data.lBak,
-                tBak: data.tBak,
-                vSil: data.vSil,
-                date: data.date,
-                srut: data.srut,
-                bahanBakar: data.bahanBakar,
-                dayaAngkutOrang: data.dayaAngkutOrang,
-                jenis: data.jenis,
-                umur: data.umur
-            }).then(res => {
-                resolve(res)
+            Kendaraan.create(
+                data.kendaraan
+            ).then(() => {
+                transaksi.create(
+                    data.transaksi
+                ).then((res) => {
+                    resolve(res)
+                })
             }).catch(err => {
                 reject(err)
             })
@@ -63,7 +28,7 @@ exports.getdata = () =>
             .then(result => {
                 resolve(result)
             }).catch(err => {
-                console.log(err)
+                reject(err)
             })
     })
 
@@ -159,6 +124,19 @@ exports.updatedata = (data, id) =>
             }).catch(err => {
                 console.log(err)
             })
+    })
+
+    exports.updatedata = (data, id) =>
+    new Promise((resolve, reject) => {
+        Kendaraan.updateOne({
+            _id: id
+        },
+        data)
+        .then(result => {
+            resolve(result)
+        }).catch(err => {
+            console.log(err)
+        })
     })
 
 exports.getdetail = (id) =>

@@ -10,7 +10,7 @@
         },
         "production": {
             "uri": "mongodb://kirDB:DBkirzxc123@dbmongo.server.pptik.id:27017/kirDB",
-            "local": "mongodb://localhost:27017/pkb"
+            "local": "mongodb://localhost:27017/kir"
         }
 
     }
