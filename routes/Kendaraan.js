@@ -22,24 +22,21 @@ const fields = uploadSetting.upload.fields([
 ])
 module.exports = router => {
     router.post('/kendaraan/simpandata', fields, async (req, res) => {
-        // console.log(req.body)
-        
-        const tampakDepan = req.files['tampakDepan']
-        const tampakBelakang = req.files['tampakBelakang']
-        const tampakKanan = req.files['tampakKanan']
-        const tampakKiri = req.files['tampakKiri']
-        // try {
-        //     console.log(JSON.parse(req.body.data).kendaraan)
-        // } catch (error) {
-        //     console.log(error)
-        // }
         let data = JSON.parse(req.body.data)
-        Object.assign(data.kendaraan, {
-            tampakDepan: tampakDepan[0].filename,
-            tampakBelakang: tampakBelakang[0].filename,
-            tampakKanan: tampakKanan[0].filename,
-            tampakKiri: tampakKiri[0].filename
-        })
+        if (!(data.transaksi.jenisPengujian === 'Numpang Uji')) {
+            const tampakDepan = req.files['tampakDepan']
+            const tampakBelakang = req.files['tampakBelakang']
+            const tampakKanan = req.files['tampakKanan']
+            const tampakKiri = req.files['tampakKiri']
+            let data = JSON.parse(req.body.data)
+            Object.assign(data.kendaraan, {
+                tampakDepan: tampakDepan[0].filename,
+                tampakBelakang: tampakBelakang[0].filename,
+                tampakKanan: tampakKanan[0].filename,
+                tampakKiri: tampakKiri[0].filename
+            })
+        }
+        
         kendaraanController.postKendaraan(data)
             .then((result) => {
                 res.json(result)

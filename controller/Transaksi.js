@@ -77,7 +77,6 @@ exports.getAll = async() =>
                 $unwind: '$dataKendaraan'
             }
         ]).then(res => {
-            console.log(res)
             resolve(res)
         }).catch(() => {
             reject(requestResponse.common_error)

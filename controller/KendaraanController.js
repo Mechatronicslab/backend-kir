@@ -64,7 +64,6 @@ exports.getdataByDate = (start, end) =>
             }
         })
             .then(result => {
-                console.log(result)
                 resolve(result)
             }).catch(err => {
                 console.log(err)
