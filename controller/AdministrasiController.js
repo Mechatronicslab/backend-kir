@@ -14,7 +14,7 @@ exports.createAdministrasi = async (data) =>
 exports.updateAdministrasi = async (id, data) =>
     await new Promise(async (resolve, reject) => {
         await model.updateOne({
-            _id: ObjectId(id)
+            _id: ObjectId('5da87f605b8f022ec80521cc')
         }, data)
             .then(res => resolve(requestResponse.common_success))
             .catch(err => reject(requestResponse.common_error))

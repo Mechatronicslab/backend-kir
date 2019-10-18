@@ -32,4 +32,10 @@ module.exports = router => {
             .then(result => res.json(result))
             .catch(err => res.json(err))
     })
+
+    router.post('/transaksi/getbydate', async (req, res) => {
+        await controller.getByDate(req.body)
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
+    })
 }

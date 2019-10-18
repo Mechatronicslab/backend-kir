@@ -3,148 +3,179 @@ const Schema = mongoose.Schema
 
 const KendaraanScehma = new Schema({
     noKendaraan: {
-        type: String
+        type: String,
+        default: ''
     },
     merk: {
-        type: String
+        type: String,
+        default: ''
     },
     type: {
-        type: String
+        type: String,
+        default: ''
     },
     jenisPeruntukan: {
         type: String
     },
     tahunPembuatan: {
-        type: String
+        type: String,
+        default: 0
     },
     tahunPenggunaan: {
-        type: String
+        type: String,
+        default: 0
     },
     nomorRangka: {
-        type: String
+        type: String,
+        default: ''
     },
     nomorMesin: {
-        type: String
+        type: String,
+        default: ''
     },
     nomorUji: {
-        type: String
+        type: String,
+        default: ''
     },
     tempatPengujian: {
-        type: String
+        type: String,
+        default: ''
     },
     tanggalTidakBerlaku: [{
-        type: Date
+        type: Date,
+        default: new Date().toLocaleDateString()
     }],
     namaPemilikKendaraan: {
-        type: String
+        type: String,
+        default: ''
     },
     alamatPerusahaan: {
-        type: String
+        type: String,
+        default: ''
     },
     jarakSumbu: {
-        type: Number
+        type: Number,
+        default: 0
     },
     panjangTotal: {
-        type: Number
+        type: Number,
+        default: 0
     },
     lebarTotal: {
-        type: Number
+        type: Number,
+        default: 0
     },
     tinggiTotal: {
-        type: Number
+        type: Number,
+        default: 0
     },
     jenisKaroseri: {
-        type: String
+        type: String,
+        default: ''
     },
     bahanKaroseri: {
-        type: String
+        type: String,
+        default: ''
     },
     jumlahTempatDuduk: {
-        type: Number
+        type: Number,
+        default: 0
     },
     jumlahTempatBerdiri: {
-        type: Number
+        type: Number,
+        default: 0
     },
     keterangan: {
-        type: String
+        type: String,
+        default: ''
     },
-    // jbbs: [{
-    //     jbb: String
-    // }],
     jbbs: {
-        type: JSON
+        type: JSON,
+        default: []
     },
-    // bkks: [{
-    //     bk: String
-    // }],
     bkks: {
-        type: JSON
+        type: JSON,
+        default: []
     },
     dayaOrang: {
-        type: Number
+        type: Number,
+        default: 0
     },
     dayaBarang: {
-        type: Number
+        type: Number,
+        default: 0
     },
     jb: {
-        type: Number
+        type: Number,
+        default: 0
     },
     mst: {
-        type: Number
+        type: Number,
+        default: 0
     },
-    // bans: [{
-    //     ban: String
-    // }],
     bans: {
-        type: JSON
+        type: JSON,
+        default: []
     },
     roh: {
-        type: Number
+        type: Number,
+        default: 0
     },
     foh: {
-        type: Number
+        type: Number,
+        default: 0
     },
     pBak: {
-        type: Number
+        type: Number,
+        default: 0
     },
     lBak: {
-        type: Number
+        type: Number,
+        default: 0
     },
     tBak: {
-        type: Number
+        type: Number,
+        default: 0
     },
     vSil: {
-        type: Number
+        type: Number,
+        default: 0
     },
     date: {
-        type: Date
+        type: Date,
+        default: new Date().toLocaleDateString()
     },
     srut: {
-        type: String
+        type: String,
+        default: ''
     },
     bahanBakar: {
-        type: String
+        type: String,
+        default: ''
     },
     dayaAngkutOrang: {
-        type: String
+        type: String,
+        default: ''
     },
     jenis: {
-        type: String
-    },
-    umur: {
-        type: String
+        type: String,
+        default: ''
     },
     tampakDepan: {
-        type: String
+        type: String,
+        default: ''
     },
     tampakBelakang: {
-        type: String
+        type: String,
+        default: ''
     },
     tampakKanan: {
-        type: String
+        type: String,
+        default: ''
     },
     tampakKiri: {
-        type: String
+        type: String,
+        default: ''
     },
     timeStamp: {
         default: new Date().toLocaleDateString(),

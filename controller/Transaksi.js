@@ -83,6 +83,33 @@ exports.getAll = async() =>
         })
     })
 
-
-
+exports.getByDate = async (data) =>
+    new Promise((resolve, reject) => {
+        model.aggregate([
+            {
+                $match: {
+                    timeStamp: {
+                        "$gte": new Date(data.startDate),
+                        "$lt": new Date(data.endDate)
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "e_kendaraans",
+                    localField: "nomorUji",
+                    foreignField: "noUji",
+                    as: "dataKendaraan"
+                },
+            },
+            {
+                $unwind: '$dataKendaraan'
+            }
+        ]).then(res => {
+            resolve(res)
+        }).catch((err) => {
+            console.log(err)
+            resolve(requestResponse.common_error)
+        })
+    })
 
