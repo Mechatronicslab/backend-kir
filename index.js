@@ -14,8 +14,10 @@ require('./routes/Kendaraan')(router);
 require('./routes/User')(router);
 require('./routes/administrasi')(router);
 require('./routes/Transaksi')(router);
-app.use("/static",express(path.join(__dirname,"static")))
-app.use(express.static('static'))
+// app.use("/static/",express(path.join(__dirname,"static")))
+// app.use(express.static('static'))
+const directory = path.join(__dirname, '/static');
+app.use('/static', express.static(directory));
 app.use(cors())
 app.options('*', cors())
 app.use(bodyParser.urlencoded({

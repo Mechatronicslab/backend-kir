@@ -68,15 +68,16 @@ exports.getAll = async() =>
             {
                 $lookup: {
                     from: "e_kendaraans",
-                    localField: "nomorUji",
-                    foreignField: "noUji",
+                    localField: "noUji",
+                    foreignField: "nomorUji",
                     as: "dataKendaraan"
                 },
             },
             {
                 $unwind: '$dataKendaraan'
             }
-        ]).then(res => {
+        ])
+        .then(res => {
             resolve(res)
         }).catch(() => {
             reject(requestResponse.common_error)
@@ -108,7 +109,6 @@ exports.getByDate = async (data) =>
         ]).then(res => {
             resolve(res)
         }).catch((err) => {
-            console.log(err)
             resolve(requestResponse.common_error)
         })
     })

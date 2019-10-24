@@ -28,7 +28,7 @@ module.exports = router => {
     })
 
     router.get('/transaksi/getall', async (req, res) => {
-        await controller.getAll(req.params.id)
+        await controller.getAll()
             .then(result => res.json(result))
             .catch(err => res.json(err))
     })

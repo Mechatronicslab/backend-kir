@@ -35,7 +35,9 @@ const KendaraanScehma = new Schema({
     },
     nomorUji: {
         type: String,
-        default: ''
+        indexe: {
+            unique: true
+        }
     },
     tempatPengujian: {
         type: String,
@@ -177,10 +179,14 @@ const KendaraanScehma = new Schema({
         type: String,
         default: ''
     },
+    deleted: {
+        type: Boolean,
+        default: false
+    },
     timeStamp: {
         default: new Date().toLocaleDateString(),
         type: Date
     }
 })
 
-module.exports = mongoose.model('e_kendaraan', KendaraanScehma)
+module.exports = mongoose.model('e__kendaraan', KendaraanScehma)

@@ -2,6 +2,7 @@ const Kendaraan = require('../models/Kendaraan')
 const administrasi = require('../models/Administrasi')
 const transaksi = require('../models/Transaksi')
 const { requestResponse } = require('../setup')
+const ObjectId = require('mongoose').Types.ObjectId
 exports.postKendaraan = async (data) =>
     new Promise((resolve, reject) => {
         try {
@@ -13,8 +14,11 @@ exports.postKendaraan = async (data) =>
                 ).then((res) => {
                     resolve(res)
                 })
-            }).catch(err => {
-                reject(err)
+            }).catch(() => {
+                reject({
+                    error: true,
+                    msg: 'Nomor Uji Sudah Digunakan'
+                })
             })
         } catch (error) {
             reject(error)
@@ -24,7 +28,9 @@ exports.postKendaraan = async (data) =>
 
 exports.getdata = () =>
     new Promise((resolve, reject) => {
-        Kendaraan.find()
+        Kendaraan.find({
+            deleted: false
+        })
             .then(result => {
                 resolve(result)
             }).catch(err => {
@@ -140,7 +146,7 @@ exports.updatedata = (data, id) =>
 
 exports.getdetail = (id) =>
     new Promise((resolve, reject) => {
-        Kendaraan.findOne({ _id: id })
+        Kendaraan.findOne({ _id:  ObjectId(id)})
             .then(result => {
                 resolve(result)
             }).catch(err => {
