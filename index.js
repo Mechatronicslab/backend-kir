@@ -6,6 +6,7 @@ const logger = require('morgan');
 const router = express.Router({ mergeParams: true });
 const port = process.env.PORT || 5100;
 const http = require('https');
+const fs = require('fs')
 const cors = require('cors');
 const path =require('path')
 let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
