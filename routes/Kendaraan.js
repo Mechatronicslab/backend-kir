@@ -85,8 +85,33 @@ module.exports = router => {
             })
     })
 
-    router.post('/kendaraan/updatedata/:id', async (req, res) => {
-        kendaraanController.updatedata(req.body, req.params.id)
+    router.post('/kendaraan/updatedata/:id', fields, async (req, res) => {
+        let data = JSON.parse(req.body.data)
+        if (req.body.tdChanged) {
+            const tampakDepan = req.files['tampakDepan']
+            Object.assign(data, {
+                tampakDepan: tampakDepan[0].filename
+            })
+        }
+        if (req.body.tbChanged) {
+            const tampakBelakang = req.files['tampakBelakang']
+            Object.assign(data, {
+                tampakBelakang: tampakBelakang[0].filename
+            })
+        }
+        if (req.body.tknChanged) {
+            const tampakKanan = req.files['tampakKanan']
+            Object.assign(data, {
+                tampakKanan: tampakKanan[0].filename
+            })
+        }
+        if (req.body.tkrChanged) {
+            const tampakKiri = req.files['tampakKiri']
+            Object.assign(data, {
+                tampakKiri: tampakKiri[0].filename
+            })
+        }
+        kendaraanController.updatedata(data, req.params.id)
             .then(() => {
                 res.json({
                     error: false
