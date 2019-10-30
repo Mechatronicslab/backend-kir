@@ -12,15 +12,15 @@ const path =require('path')
 let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
 let certificate = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\cert.pem', 'utf8')
 let credentials = { key: privateKey, cert: certificate }
-const server = http.createServer(credentials, app);
-const setUp = require('./setup');
-require('./routes/Kendaraan')(router);
-require('./routes/User')(router);
-require('./routes/administrasi')(router);
-require('./routes/Transaksi')(router);
+const server = http.createServer(credentials, app)
+const setUp = require('./setup')
+require('./routes/Kendaraan')(router)
+require('./routes/User')(router)
+require('./routes/administrasi')(router)
+require('./routes/Transaksi')(router)
 // app.use("/static/",express(path.join(__dirname,"static")))
 // app.use(express.static('static'))
-const directory = path.join(__dirname, '/static');
+const directory = path.join(__dirname, '/static')
 app.use('/static', express.static(directory));
 app.use(cors())
 app.options('*', cors())
@@ -42,7 +42,9 @@ async function onListening() {
         var bind = typeof addr === 'string'
             ? 'pipe ' + addr
             : 'port ' + addr.port;
-        setUp.dbConnect()
+        setUp.dbConnect().catch(err => {
+            console.log('mongo error :' + err)
+        })
         //app.database = database
         console.log('Listening on ' + bind)
         //debug('Listening on ' + bind);

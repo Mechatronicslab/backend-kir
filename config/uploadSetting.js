@@ -1,10 +1,10 @@
-const multer = require('multer');
+const multer = require('multer')
 const storage = multer.diskStorage({
 		destination: function(req, file, cb) {
 			cb(null, './static');
 		},
 		filename: function(req, file, cb) {
-			cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+			cb(null, new Date().toISOString().replace(/:/g, '-') + Math.ceil(Math.random() * 1000000) + file.originalname)
 		}
 	});
 

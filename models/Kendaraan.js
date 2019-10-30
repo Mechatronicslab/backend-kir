@@ -163,22 +163,22 @@ const KendaraanScehma = new Schema({
         type: String,
         default: ''
     },
-    tampakDepan: {
-        type: String,
-        default: ''
-    },
-    tampakBelakang: {
-        type: String,
-        default: ''
-    },
-    tampakKanan: {
-        type: String,
-        default: ''
-    },
-    tampakKiri: {
-        type: String,
-        default: ''
-    },
+    // tampakDepan: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakBelakang: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakKanan: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakKiri: {
+    //     type: String,
+    //     default: ''
+    // },
     deleted: {
         type: Boolean,
         default: false

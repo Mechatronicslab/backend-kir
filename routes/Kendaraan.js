@@ -23,20 +23,41 @@ const fields = uploadSetting.upload.fields([
 module.exports = router => {
     router.post('/kendaraan/simpandata', fields, async (req, res) => {
         let data = JSON.parse(req.body.data)
-        if (!(data.transaksi.jenisPengujian === 'Numpang Uji')) {
-            const tampakDepan = req.files['tampakDepan']
-            const tampakBelakang = req.files['tampakBelakang']
-            const tampakKanan = req.files['tampakKanan']
-            const tampakKiri = req.files['tampakKiri']
-            let data = JSON.parse(req.body.data)
-            Object.assign(data.kendaraan, {
+        // if (!(data.transaksi.jenisPengujian === 'Numpang Uji')) {
+        const tampakDepan = req.files['tampakDepan']
+        const tampakBelakang = req.files['tampakBelakang']
+        const tampakKanan = req.files['tampakKanan']
+        const tampakKiri = req.files['tampakKiri']
+        if (tampakDepan === undefined || tampakBelakang === undefined || tampakKanan === undefined || tampakKiri === undefined) {
+            if (tampakDepan !== undefined) {
+                Object.assign(data.transaksi, {
+                    tampakDepan: tampakDepan[0].filename
+                })
+            }
+            if (tampakBelakang !== undefined) {
+                Object.assign(data.transaksi, {
+                    tampakBelakang: tampakBelakang[0].filename
+                })
+            }
+            if (tampakKanan !== undefined) {
+                Object.assign(data.transaksi, {
+                    tampakKanan: tampakKanan[0].filename
+                })
+            }
+            if (tampakKiri !== undefined) {
+                Object.assign(data.transaksi, {
+                    tampakKiri: tampakKiri[0].filename
+                })
+            }
+        } else {
+            Object.assign(data.transaksi, {
                 tampakDepan: tampakDepan[0].filename,
                 tampakBelakang: tampakBelakang[0].filename,
                 tampakKanan: tampakKanan[0].filename,
                 tampakKiri: tampakKiri[0].filename
             })
         }
-        
+        // }
         kendaraanController.postKendaraan(data)
             .then((result) => {
                 res.json(result)
@@ -86,32 +107,7 @@ module.exports = router => {
     })
 
     router.post('/kendaraan/updatedata/:id', fields, async (req, res) => {
-        let data = JSON.parse(req.body.data)
-        if (req.body.tdChanged) {
-            const tampakDepan = req.files['tampakDepan']
-            Object.assign(data, {
-                tampakDepan: tampakDepan[0].filename
-            })
-        }
-        if (req.body.tbChanged) {
-            const tampakBelakang = req.files['tampakBelakang']
-            Object.assign(data, {
-                tampakBelakang: tampakBelakang[0].filename
-            })
-        }
-        if (req.body.tknChanged) {
-            const tampakKanan = req.files['tampakKanan']
-            Object.assign(data, {
-                tampakKanan: tampakKanan[0].filename
-            })
-        }
-        if (req.body.tkrChanged) {
-            const tampakKiri = req.files['tampakKiri']
-            Object.assign(data, {
-                tampakKiri: tampakKiri[0].filename
-            })
-        }
-        kendaraanController.updatedata(data, req.params.id)
+        kendaraanController.updatedata(req.body, req.params.id)
             .then(() => {
                 res.json({
                     error: false

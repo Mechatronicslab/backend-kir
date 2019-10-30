@@ -17,3 +17,34 @@ exports.login = async(data) =>
             }
         })
     })
+
+exports.changePassword = async(data, id) =>
+    new Promise((resolve, reject) => {
+        User.findOne({
+            _id: id
+        }).then(res => {
+            if (res) {
+                if (bcrypt.compareSync(data.oldPassword,res.password)) {
+                    bcrypt.hash(data.newPassword,10, (err,hash) => {
+                        User.updateOne({
+                            _id: id
+                        }, {
+                            password: hash
+                        }).then(() => {
+                            resolve({
+                                error: false,
+                                msg: 'Berhasil Merubah Password'
+                            })
+                        })
+                    })
+                } else {
+                    reject({
+                        error: true,
+                        msg: 'Password Lama Salah'
+                    })
+                }
+            } else {
+                reject('Data Tidak Ditemukan')
+            }
+        })
+    })
