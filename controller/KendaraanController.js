@@ -8,12 +8,16 @@ exports.postKendaraan = async (data) =>
         try {
             Kendaraan.create(
                 data.kendaraan
-            ).then(() => {
-                transaksi.create(
-                    data.transaksi
-                ).then((res) => {
-                    resolve(res)
-                })
+            ).then((hasil) => {
+                if (data.hanyaKendaraan) {
+                    resolve(hasil)
+                } else {
+                    transaksi.create(
+                        data.transaksi
+                    ).then((res) => {
+                        resolve(res)
+                    })
+                }
             }).catch(() => {
                 reject({
                     error: true,
