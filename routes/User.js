@@ -7,7 +7,6 @@ module.exports = router => {
             username: req.body.username,
             password: req.body.password
         }).then((result) => {
-            console.log(result)
             let token=jwt.sign({
                 id: result._id,
                 username: result.username

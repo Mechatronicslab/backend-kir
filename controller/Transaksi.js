@@ -67,7 +67,7 @@ exports.getAll = async() =>
         model.aggregate([
             {
                 $lookup: {
-                    from: "e_kendaraans",
+                    from: "e__kendaraans",
                     localField: "noUji",
                     foreignField: "nomorUji",
                     as: "dataKendaraan"
