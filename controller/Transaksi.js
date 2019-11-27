@@ -1,5 +1,5 @@
 const model = require('../models/Transaksi')
-const administrasi = require('../models/Administrasi')
+const Kendaraan = require('../models/Kendaraan')
 const { requestResponse } = require('../setup')
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
@@ -8,10 +8,35 @@ exports.createTransaksi = async (body) =>
        
     //resolve(data)
     // let detail = JSON.parse(JSON.stringify(result))
-    newData = new model(JSON.parse(JSON.stringify(body)))
+    let newData = new model(JSON.parse(JSON.stringify(body)))
     await newData.save()
-        .then(res => resolve(requestResponse.common_success))
-        .catch(err => reject(requestResponse.common_error))
+        .then(() => {
+            if (body.jenisPengujian === 'Numpang Uji') {
+                resolve(requestResponse.common_success)
+            } else {
+                console.log(body.tanggalTidakBerlaku)
+                Kendaraan.updateOne({
+                    nomorUji: body.noUji
+                },
+                {
+                    "$set": {
+                        tampakDepan: body.tampakDepan,
+                        tampakBelakang: body.tampakBelakang,
+                        tampakKanan: body.tampakKanan,
+                        tampakKiri: body.tampakKiri,
+                    },
+                    "$addToSet": {
+                        tanggalTidakBerlaku: body.tanggalTidakBerlaku
+                    }
+                }).then(() => {
+                    resolve(requestResponse.common_success)
+                })
+                .catch(() => {
+                    reject(requestResponse.common_error)
+                })
+            }
+        })
+        // .catch(() => reject(requestResponse.common_error))
     })
 
 

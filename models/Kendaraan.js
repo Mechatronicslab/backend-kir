@@ -44,8 +44,13 @@ const KendaraanScehma = new Schema({
         default: ''
     },
     tanggalTidakBerlaku: [{
-        type: Date,
-        default: new Date().toLocaleDateString()
+        date: {
+            type: Date
+        },
+        timeStamp: {
+            type: Date,
+            default: new Date().toLocaleDateString()
+        }
     }],
     namaPemilikKendaraan: {
         type: String,
@@ -163,22 +168,22 @@ const KendaraanScehma = new Schema({
         type: String,
         default: ''
     },
-    // tampakDepan: {
-    //     type: String,
-    //     default: ''
-    // },
-    // tampakBelakang: {
-    //     type: String,
-    //     default: ''
-    // },
-    // tampakKanan: {
-    //     type: String,
-    //     default: ''
-    // },
-    // tampakKiri: {
-    //     type: String,
-    //     default: ''
-    // },
+    tampakDepan: {
+        type: String,
+        default: ''
+    },
+    tampakBelakang: {
+        type: String,
+        default: ''
+    },
+    tampakKanan: {
+        type: String,
+        default: ''
+    },
+    tampakKiri: {
+        type: String,
+        default: ''
+    },
     deleted: {
         type: Boolean,
         default: false

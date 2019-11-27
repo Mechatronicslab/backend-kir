@@ -29,6 +29,20 @@ exports.postKendaraan = async (data) =>
         }
     })
 
+exports.updatePatch = (data, id) =>
+    new Promise((resolve, reject) => {
+        Kendaraan.updateOne({
+            _id: ObjectId(id)
+        },
+        {
+            "$set": {
+                data,
+                "$push": data.tanggalTidakBerlaku
+            }
+        }).then(() => resolve(requestResponse.common_success))
+        .catch(() => reject(requestResponse.common_error))
+    })
+
 
 exports.getdata = () =>
     new Promise((resolve, reject) => {
@@ -137,11 +151,21 @@ exports.updatedata = (data, id) =>
 
     exports.updatedata = (data, id) =>
     new Promise((resolve, reject) => {
+        let tanggalTidakBerlaku = data.tanggalTidakBerlaku
+        delete data.tanggalTidakBerlaku
+        console.log(tanggalTidakBerlaku)
         Kendaraan.updateOne({
-            _id: id
+            _id: id,
+            "tanggalTidakBerlaku._id": ObjectId(tanggalTidakBerlaku._id),
         },
-        data)
+        {
+            $set: {
+                data,
+                "tanggalTidakBerlaku.$.date": tanggalTidakBerlaku.date
+            }
+        })
         .then(result => {
+            console.log(result)
             resolve(result)
         }).catch(err => {
             console.log(err)
@@ -150,9 +174,23 @@ exports.updatedata = (data, id) =>
 
 exports.getdetail = (id) =>
     new Promise((resolve, reject) => {
-        Kendaraan.findOne({ _id:  ObjectId(id)})
+        Kendaraan.aggregate([
+            {
+                "$match": {
+                    _id: ObjectId(id)
+                }
+            },
+            {
+                "$unwind": "$tanggalTidakBerlaku"
+            },
+            {
+                "$sort": {
+                    "tanggalTidakBerlaku.date": -1
+                }
+            }
+        ])
             .then(result => {
-                resolve(result)
+                resolve(result[0])
             }).catch(err => {
                 console.log(err)
             })

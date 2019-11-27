@@ -4,25 +4,25 @@ const Schema = mongoose.Schema({
     noUji: String,
     detail: JSON,
     jenisPengujian: String,
-    tanggalTidakBerlaku: {
-        type: Date
-    },
-    tampakDepan: {
-        type: String,
-        default: ''
-    },
-    tampakBelakang: {
-        type: String,
-        default: ''
-    },
-    tampakKanan: {
-        type: String,
-        default: ''
-    },
-    tampakKiri: {
-        type: String,
-        default: ''
-    },
+    // tanggalTidakBerlaku: {
+    //     type: Date
+    // },
+    // tampakDepan: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakBelakang: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakKanan: {
+    //     type: String,
+    //     default: ''
+    // },
+    // tampakKiri: {
+    //     type: String,
+    //     default: ''
+    // },
     timeStamp: {
         default: new Date().toLocaleDateString(),
         type: Date
