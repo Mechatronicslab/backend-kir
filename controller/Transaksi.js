@@ -14,7 +14,6 @@ exports.createTransaksi = async (body) =>
             if (body.jenisPengujian === 'Numpang Uji') {
                 resolve(requestResponse.common_success)
             } else {
-                console.log(body.tanggalTidakBerlaku)
                 Kendaraan.updateOne({
                     nomorUji: body.noUji
                 },
@@ -104,7 +103,8 @@ exports.getAll = async() =>
         ])
         .then(res => {
             resolve(res)
-        }).catch(() => {
+        }).catch((err) => {
+            console.log(err)
             reject(requestResponse.common_error)
         })
     })
@@ -122,9 +122,9 @@ exports.getByDate = async (data) =>
             },
             {
                 $lookup: {
-                    from: "e_kendaraans",
-                    localField: "nomorUji",
-                    foreignField: "noUji",
+                    from: "e__kendaraans",
+                    localField: "noUji",
+                    foreignField: "nomorUji",
                     as: "dataKendaraan"
                 },
             },

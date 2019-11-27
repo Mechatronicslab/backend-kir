@@ -5,42 +5,70 @@ const { requestResponse } = require('../setup')
 const ObjectId = require('mongoose').Types.ObjectId
 exports.postKendaraan = async (data) =>
     new Promise((resolve, reject) => {
-        try {
-            Kendaraan.create(
-                data.kendaraan
-            ).then((hasil) => {
-                if (data.hanyaKendaraan) {
-                    resolve(hasil)
-                } else {
-                    transaksi.create(
-                        data.transaksi
-                    ).then((res) => {
-                        resolve(res)
-                    })
-                }
-            }).catch(() => {
-                reject({
-                    error: true,
-                    msg: 'Nomor Uji Sudah Digunakan'
+        Kendaraan.create(
+            data.kendaraan
+        ).then((hasil) => {
+            if (data.hanyaKendaraan) {
+                resolve(hasil)
+            } else {
+                transaksi.create(
+                    data.transaksi
+                ).then((res) => {
+                    resolve(res)
                 })
+            }
+        }).catch(() => {
+            reject({
+                error: true,
+                msg: 'Nomor Uji Sudah Digunakan'
             })
-        } catch (error) {
-            reject(error)
-        }
+        })
     })
 
-exports.updatePatch = (data, id) =>
+exports.numpangUji = (data) =>
     new Promise((resolve, reject) => {
-        Kendaraan.updateOne({
-            _id: ObjectId(id)
-        },
-        {
-            "$set": {
-                data,
-                "$push": data.tanggalTidakBerlaku
-            }
-        }).then(() => resolve(requestResponse.common_success))
-        .catch(() => reject(requestResponse.common_error))
+        transaksi.create(data.transaksi)
+            .then(() => {
+                Kendaraan.findOne({
+                    nomorUji: data.kendaraan.nomorUji
+                }).then(res => {
+                    const kendaraan = data.kendaraan
+                    const tanggalTidakBerlaku = {
+                        date: kendaraan.tanggalTidakBerlaku
+                    }
+                    delete kendaraan.tanggalTidakBerlaku
+                    if (res === null) {
+                        Kendaraan.create(data.kendaraan)
+                            .then(() => {
+                                resolve(requestResponse.common_success)
+                            })
+                    } else {
+                        Kendaraan.updateOne({
+                            nomorUji: kendaraan.nomorUji
+                        },
+                        {
+                            "$set": kendaraan,
+                            "$addToSet": {
+                                tanggalTidakBerlaku: tanggalTidakBerlaku
+                            }
+                        }).then(() => {
+                            resolve(requestResponse.common_success)
+                        })
+                    }
+                }).catch(() => {
+                    reject(requestResponse.common_error)
+                })
+            })
+        // Kendaraan.updateOne({
+        //     _id: ObjectId(id)
+        // },
+        // {
+        //     "$set": {
+        //         data,
+        //         "$push": data.tanggalTidakBerlaku
+        //     }
+        // }).then(() => resolve(requestResponse.common_success))
+        // .catch(() => reject(requestResponse.common_error))
     })
 
 

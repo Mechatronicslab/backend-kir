@@ -58,13 +58,22 @@ module.exports = router => {
             })
         }
         // }
-        kendaraanController.postKendaraan(data)
-            .then((result) => {
+        if (!(data.transaksi.jenisPengujian === 'Numpang Uji')) {
+            kendaraanController.postKendaraan(data)
+            .then(result => {
                 res.json(result)
             }).catch(err => {
                 res.json(err)
                 console.log(err)
             })
+        } else {
+            kendaraanController.numpangUji(data)
+                .then(result => {
+                    res.json(result)
+                }).catch(err => {
+                    res.json(err)
+                })
+        }
 
     })
 
