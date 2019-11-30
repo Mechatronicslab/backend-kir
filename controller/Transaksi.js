@@ -1,6 +1,6 @@
 const model = require('../models/Transaksi')
 const Kendaraan = require('../models/Kendaraan')
-const { requestResponse } = require('../setup')
+const { requestResponse, generateIdTransaksi } = require('../setup')
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 exports.createTransaksi = async (body) =>
@@ -9,33 +9,42 @@ exports.createTransaksi = async (body) =>
     //resolve(data)
     // let detail = JSON.parse(JSON.stringify(result))
     let newData = new model(JSON.parse(JSON.stringify(body)))
+    let idTransaksi = {
+        idTransaksi: generateIdTransaksi
+    }
+    Object.assign(newData, idTransaksi)
+    Object.assign(body.tanggalTidakBerlaku, idTransaksi)
+    Object.assign(body.date, idTransaksi)
+    console.log(body.date)
     await newData.save()
         .then(() => {
-            if (body.jenisPengujian === 'Numpang Uji') {
-                resolve(requestResponse.common_success)
-            } else {
-                Kendaraan.updateOne({
-                    nomorUji: body.noUji
+            // if (body.jenisPengujian === 'Numpang Uji') {
+            //     resolve(requestResponse.common_success)
+            // } else {
+            Kendaraan.updateOne({
+                nomorUji: body.noUji
+            },
+            {
+                "$set": {
+                    tampakDepan: body.tampakDepan,
+                    tampakBelakang: body.tampakBelakang,
+                    tampakKanan: body.tampakKanan,
+                    tampakKiri: body.tampakKiri,
                 },
-                {
-                    "$set": {
-                        tampakDepan: body.tampakDepan,
-                        tampakBelakang: body.tampakBelakang,
-                        tampakKanan: body.tampakKanan,
-                        tampakKiri: body.tampakKiri,
-                    },
-                    "$addToSet": {
-                        tanggalTidakBerlaku: body.tanggalTidakBerlaku
-                    }
-                }).then(() => {
-                    resolve(requestResponse.common_success)
-                })
-                .catch(() => {
-                    reject(requestResponse.common_error)
-                })
-            }
+                "$addToSet": {
+                    tanggalTidakBerlaku: body.tanggalTidakBerlaku,
+                    // date: {
+                    //     date: body.date.date
+                    // }
+                    date: body.date
+                },
+            }).then(() => {
+                resolve(requestResponse.common_success)
+            })
+            .catch(() => {
+                reject(requestResponse.common_error)
+            })
         })
-        // .catch(() => reject(requestResponse.common_error))
     })
 
 

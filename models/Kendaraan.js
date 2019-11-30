@@ -35,7 +35,7 @@ const KendaraanScehma = new Schema({
     },
     nomorUji: {
         type: String,
-        indexe: {
+        indexes: {
             unique: true
         }
     },
@@ -44,6 +44,10 @@ const KendaraanScehma = new Schema({
         default: ''
     },
     tanggalTidakBerlaku: [{
+        idTransaksi: {
+            type: String,
+            default: null
+        },
         date: {
             type: Date
         },
@@ -148,10 +152,19 @@ const KendaraanScehma = new Schema({
         type: Number,
         default: 0
     },
-    date: {
-        type: Date,
-        default: new Date().toLocaleDateString()
-    },
+    date: [{
+        idTransaksi: {
+            type: String,
+            default: null
+        },
+        date: {
+            type: Date
+        },
+        timeStamp: {
+            type: Date,
+            default: new Date().toLocaleDateString()
+        }
+    }],
     srut: {
         type: String,
         default: ''

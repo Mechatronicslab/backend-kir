@@ -30,6 +30,8 @@ function dbConnect() {
   });
 }
 
+const generateIdTransaksi = 'TRX' + Math.floor(Math.random() * 100000000) + new Date().getTime().toString()
+
 const requestResponse = {
   data_not_found: {
     error: true,
@@ -51,6 +53,11 @@ const requestResponse = {
     rc: '5000',
     message: 'Server tidak merespon, silahkan hubungi call center untuk info lebih lanjut'
   },
+  duplicatePrimary: {
+    error: true,
+    rc: '5100',
+    message: 'Data Sudah Ada'
+  },
   token_invalid: {
     error: true,
     rc: '0030',
@@ -58,4 +65,4 @@ const requestResponse = {
   }
 }
 
-module.exports = { requestResponse, mongodbUri, dbConnect }
+module.exports = { requestResponse, mongodbUri, dbConnect, generateIdTransaksi }

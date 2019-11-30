@@ -5,7 +5,7 @@ module.exports = router => {
             .then(result => res.json(result))
             .catch(err => res.json(err))
 
-    });
+    })
 
     router.put('/administrasi/update/:id', async (req, res) => {
         await controller.updateAdministrasi(req.params.id, req.body)
@@ -19,8 +19,9 @@ module.exports = router => {
             .catch(err => res.json(err))
     })
 
-    router.get('/administrasi', async (req, res) => {
-        await controller.getAdministrasi(req.params.id)
+    router.get('/administrasi/:jenisPengujian', async (req, res) => {
+        // console.log(req.params.jenisPengujian.replace('%20', ' '))
+        await controller.getAdministrasi(req.params.jenisPengujian.replace('%20', ' '))
             .then(result => res.json(result))
             .catch(err => res.json(err))
     })

@@ -2,17 +2,25 @@ const model = require('../models/Administrasi')
 const { requestResponse } = require('../setup')
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const kendaraan = require('../models/Kendaraan')
 exports.createAdministrasi = async (data) =>
     await new Promise(async (resolve, reject) => {
-        newData = new model(JSON.parse(JSON.stringify(data)))
+        let newData = new model(JSON.parse(JSON.stringify(data)))
         await newData.save()
             .then(res => resolve(requestResponse.common_success))
-            .catch(err => reject(requestResponse.common_error))
+            .catch(err => {
+                if(err.code === 11000) {
+                    reject(requestResponse.duplicatePrimary)
+                } else {
+                    reject(requestResponse.common_error)
+                }
+            })
     })
 
 
 exports.updateAdministrasi = async (id, data) =>
     await new Promise(async (resolve, reject) => {
+        console.log(id)
         await model.updateOne({
             _id: ObjectId(id)
         }, data)
@@ -29,9 +37,14 @@ exports.deleteAdministrasi = async (id) =>
             .catch(err => reject(requestResponse.common_error))
     })
 
-exports.getAdministrasi = async () =>
+exports.getAdministrasi = async (jenisPengujian) =>
     await new Promise(async (resolve, reject) => {
-        await model.find()
+        if (jenisPengujian === '' || jenisPengujian === null) {
+            reject(requestResponse.common_error)
+        }
+        await model.findOne({
+            jenisPengujian: jenisPengujian
+        })
             .then(res => resolve(res))
-            .catch(err => reject(requestResponse.common_error))
+            .catch(() => reject(requestResponse.common_error))
     })

@@ -1,55 +1,72 @@
 const Kendaraan = require('../models/Kendaraan')
 const administrasi = require('../models/Administrasi')
 const transaksi = require('../models/Transaksi')
-const { requestResponse } = require('../setup')
+const { requestResponse, generateIdTransaksi } = require('../setup')
 const ObjectId = require('mongoose').Types.ObjectId
 exports.postKendaraan = async (data) =>
     new Promise((resolve, reject) => {
-        Kendaraan.create(
-            data.kendaraan
-        ).then((hasil) => {
-            if (data.hanyaKendaraan) {
-                resolve(hasil)
-            } else {
-                transaksi.create(
-                    data.transaksi
-                ).then((res) => {
-                    resolve(res)
-                })
+        try {
+            let idTransaksi = {
+                idTransaksi: data.hanyaKendaraan ? null : generateIdTransaksi
             }
-        }).catch(() => {
-            reject({
-                error: true,
-                msg: 'Nomor Uji Sudah Digunakan'
+            Object.assign(data.kendaraan.tanggalTidakBerlaku, idTransaksi)
+            Object.assign(data.kendaraan.date, idTransaksi)
+            Object.assign(data.transaksi, idTransaksi)
+            Kendaraan.create(
+                data.kendaraan
+            ).then((hasil) => {
+                if (data.hanyaKendaraan) {
+                    resolve(hasil)
+                } else {
+                    transaksi.create(
+                        data.transaksi
+                    ).then((res) => {
+                        resolve(res)
+                    })
+                }
+            }).catch(() => {
+                reject({
+                    error: true,
+                    msg: 'Nomor Uji Sudah Digunakan'
+                })
             })
-        })
+        } catch (error) {
+            reject(requestResponse.common_error)
+        }
     })
 
 exports.numpangUji = (data) =>
     new Promise((resolve, reject) => {
+        let idTransaksi = {
+            idTransaksi: generateIdTransaksi
+        }
+        Object.assign(data.kendaraan.tanggalTidakBerlaku, idTransaksi)
+        Object.assign(data.kendaraan.date, idTransaksi)
+        Object.assign(data.transaksi, idTransaksi)
         transaksi.create(data.transaksi)
             .then(() => {
                 Kendaraan.findOne({
                     nomorUji: data.kendaraan.nomorUji
                 }).then(res => {
-                    const kendaraan = data.kendaraan
-                    const tanggalTidakBerlaku = {
-                        date: kendaraan.tanggalTidakBerlaku
-                    }
-                    delete kendaraan.tanggalTidakBerlaku
                     if (res === null) {
                         Kendaraan.create(data.kendaraan)
                             .then(() => {
                                 resolve(requestResponse.common_success)
                             })
                     } else {
+                        const kendaraan = data.kendaraan
+                        const tanggalTidakBerlaku = kendaraan.tanggalTidakBerlaku
+                        const date = kendaraan.date
+                        delete kendaraan.tanggalTidakBerlaku
+                        delete kendaraan.date
                         Kendaraan.updateOne({
                             nomorUji: kendaraan.nomorUji
                         },
                         {
                             "$set": kendaraan,
                             "$addToSet": {
-                                tanggalTidakBerlaku: tanggalTidakBerlaku
+                                tanggalTidakBerlaku: tanggalTidakBerlaku,
+                                date: date
                             }
                         }).then(() => {
                             resolve(requestResponse.common_success)
@@ -59,16 +76,6 @@ exports.numpangUji = (data) =>
                     reject(requestResponse.common_error)
                 })
             })
-        // Kendaraan.updateOne({
-        //     _id: ObjectId(id)
-        // },
-        // {
-        //     "$set": {
-        //         data,
-        //         "$push": data.tanggalTidakBerlaku
-        //     }
-        // }).then(() => resolve(requestResponse.common_success))
-        // .catch(() => reject(requestResponse.common_error))
     })
 
 
@@ -90,9 +97,11 @@ exports.getdataById = (body) =>
         await Kendaraan.find(body)
             .then(async (kendaraan) => {
                 if (kendaraan.length > 0) {
-                    await administrasi.find()
+                    await administrasi.findOne({
+                        jenisPengujian: 'Uji Berkala'
+                    })
                         .then(async (result) => {
-                            let data = Object.assign({ kendaraan: kendaraan[0], administrasi: result[0] })
+                            let data = Object.assign({ kendaraan: kendaraan[0], administrasi: result })
                             resolve(data)
                         }).catch(err => {
                             reject(err)
@@ -124,72 +133,20 @@ exports.getdataByDate = (start, end) =>
 
 exports.updatedata = (data, id) =>
     new Promise((resolve, reject) => {
-        Kendaraan.updateOne({
-            _id: id
-        },
-            {
-                noKendaraan: data.noKendaraan,
-                merk: data.merk,
-                type: data.type,
-                jenisPeruntukan: data.jenisPeruntukan,
-                tahunPembuatan: data.tahunPembuatan,
-                tahunPenggunaan: data.tahunPenggunaan,
-                nomorRangka: data.nomorRangka,
-                nomorMesin: data.nomorMesin,
-                nomorUji: data.nomorUji,
-                tempatPengujian: data.tempatPengujian,
-                tanggalTidakBerlaku: data.tanggalTidakBerlaku,
-                namaPemilikKendaraan: data.namaPemilikKendaraan,
-                alamatPerusahaan: data.alamatPerusahaan,
-                jarakSumbu: data.jarakSumbu,
-                panjangTotal: data.panjangTotal,
-                lebarTotal: data.lebarTotal,
-                tinggiTotal: data.tinggiTotal,
-                jenisKaroseri: data.jenisKaroseri,
-                bahanKaroseri: data.bahanKaroseri,
-                jumlahTtempatDuduk: data.jumlahTtempatDuduk,
-                jumlahTtempatberdiri: data.jumlahTtempatberdiri,
-                keterangan: data.keterangan,
-                jbbs: data.jbbs,
-                bkks: data.bkks,
-                dayaOrang: data.dayaOrang,
-                dayaBarang: data.dayaBarang,
-                jb: data.jb,
-                mst: data.mst,
-                bans: data.bans,
-                roh: data.roh,
-                foh: data.foh,
-                pBak: data.pBak,
-                lBak: data.lBak,
-                tBak: data.tBak,
-                vSil: data.vSil,
-                date: data.date,
-                srut: data.srut,
-                bahanBakar: data.bahanBakar,
-                dayaAngkutOrang: data.dayaAngkutOrang,
-                jenis: data.jenis,
-                umur: data.umur
-            })
-            .then(result => {
-                resolve(result)
-            }).catch(err => {
-                console.log(err)
-            })
-    })
-
-    exports.updatedata = (data, id) =>
-    new Promise((resolve, reject) => {
         let tanggalTidakBerlaku = data.tanggalTidakBerlaku
+        let date = data.date
         delete data.tanggalTidakBerlaku
-        console.log(tanggalTidakBerlaku)
+        delete data.date
         Kendaraan.updateOne({
             _id: id,
             "tanggalTidakBerlaku._id": ObjectId(tanggalTidakBerlaku._id),
+            "date._id": ObjectId(date._id)
         },
         {
             $set: {
                 data,
-                "tanggalTidakBerlaku.$.date": tanggalTidakBerlaku.date
+                "tanggalTidakBerlaku.$.date": tanggalTidakBerlaku.date,
+                "date.$.date": date.date
             }
         })
         .then(result => {
@@ -208,14 +165,14 @@ exports.getdetail = (id) =>
                     _id: ObjectId(id)
                 }
             },
-            {
-                "$unwind": "$tanggalTidakBerlaku"
-            },
-            {
-                "$sort": {
-                    "tanggalTidakBerlaku.date": -1
-                }
-            }
+            // {
+            //     "$unwind": "$tanggalTidakBerlaku"
+            // },
+            // {
+            //     "$sort": {
+            //         "tanggalTidakBerlaku.date": -1
+            //     }
+            // }
         ])
             .then(result => {
                 resolve(result[0])

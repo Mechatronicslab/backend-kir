@@ -58,21 +58,30 @@ module.exports = router => {
             })
         }
         // }
-        if (!(data.transaksi.jenisPengujian === 'Numpang Uji')) {
+        if (data.transaksi === null) {
             kendaraanController.postKendaraan(data)
-            .then(result => {
-                res.json(result)
-            }).catch(err => {
-                res.json(err)
-                console.log(err)
-            })
-        } else {
-            kendaraanController.numpangUji(data)
                 .then(result => {
                     res.json(result)
                 }).catch(err => {
                     res.json(err)
                 })
+        } else {
+            if (data.transaksi.jenisPengujian === 'Numpang Uji') {
+                kendaraanController.numpangUji(data)
+                    .then(result => {
+                        res.json(result)
+                    }).catch(err => {
+                        res.json(err)
+                    })
+            } else {
+                kendaraanController.postKendaraan(data)
+                .then(result => {
+                    res.json(result)
+                }).catch(err => {
+                    res.json(err)
+                    console.log(err)
+                })
+            }
         }
 
     })
@@ -85,7 +94,6 @@ module.exports = router => {
     })
 
     router.post('/kendaraan/search', async (req, res) => {
-        console.log(req.body)
         kendaraanController.getdataById(req.body)
             .then(result => {
                 res.json(result)

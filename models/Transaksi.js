@@ -1,5 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema({
+    idTransaksi: {
+        type: String,
+        indexes: {
+            unique: true
+        }
+    },
     noMesin: String,
     noUji: String,
     detail: JSON,
