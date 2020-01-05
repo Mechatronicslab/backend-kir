@@ -5,15 +5,15 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 const router = express.Router({ mergeParams: true });
 const port = process.env.PORT || 5100;
-const http = require('http');
+const http = require('https');
 const fs = require('fs')
 const cors = require('cors');
 const path =require('path')
-// let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
-// let certificate = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\cert.pem', 'utf8')
-// let credentials = { key: privateKey, cert: certificate }
-// const server = http.createServer(credentials, app)
-const server = http.createServer(app)
+let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
+let certificate = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\cert.pem', 'utf8')
+let credentials = { key: privateKey, cert: certificate }
+const server = http.createServer(credentials, app)
+// const server = http.createServer(app)
 const setUp = require('./setup')
 require('./routes/Kendaraan')(router)
 require('./routes/User')(router)
