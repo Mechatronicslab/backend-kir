@@ -118,10 +118,13 @@ exports.getdataByDate = (start, end) =>
     new Promise((resolve, reject) => {
         let startDate = new Date(start)
         let endDate = new Date(end)
+        console.log(startDate + ' - ' + endDate)
         Kendaraan.find({
             timeStamp: {
-                $gte: startDate,
-                $lt: endDate
+                $gte: startDate
+            },
+            timeStamp: {
+                $lte: endDate
             }
         })
             .then(result => {

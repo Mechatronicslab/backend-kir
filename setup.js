@@ -24,8 +24,10 @@ function dbConnect() {
       if (err) {
         console.log("Connected to mongodb server failed");
         reject(err);
-      } else
+      } else {
+        console.log('connect to db success')
         resolve(database)
+      }
     });
   });
 }
