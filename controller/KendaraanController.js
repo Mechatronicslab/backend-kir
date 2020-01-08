@@ -5,6 +5,7 @@ const { requestResponse, generateIdTransaksi } = require('../setup')
 const ObjectId = require('mongoose').Types.ObjectId
 exports.postKendaraan = async (data) =>
     new Promise((resolve, reject) => {
+        console.log(data.transaksi)
         try {
             let idTransaksi = {
                 idTransaksi: data.hanyaKendaraan ? null : generateIdTransaksi
@@ -24,13 +25,15 @@ exports.postKendaraan = async (data) =>
                         resolve(res)
                     })
                 }
-            }).catch(() => {
+            }).catch((err) => {
+                console.log(err)
                 reject({
                     error: true,
                     msg: 'Nomor Uji Sudah Digunakan'
                 })
             })
         } catch (error) {
+            console.log(error)
             reject(requestResponse.common_error)
         }
     })

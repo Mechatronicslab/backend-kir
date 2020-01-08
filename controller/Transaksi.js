@@ -109,7 +109,9 @@ exports.getAll = async() =>
             {
                 $unwind: '$dataKendaraan'
             }
-        ])
+        ]).sort({
+            timeStamp: -1
+        })
         .then(res => {
             resolve(res)
         }).catch((err) => {

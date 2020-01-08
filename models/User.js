@@ -7,6 +7,21 @@ const UserSchema = new Schema({
     },
     password: {
         type: String
+    },
+    role: {
+        type: String
+    },
+    nama: {
+        type: String
+    },
+    alamat: {
+        type: String
+    },
+    noTelp: {
+        type: String
+    },
+    sessionToken: {
+        type: String
     }
 })
 
