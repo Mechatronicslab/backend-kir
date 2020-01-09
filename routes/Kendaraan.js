@@ -125,6 +125,15 @@ module.exports = router => {
 
     router.post('/kendaraan/updatedata/:id', fields, async (req, res) => {
         kendaraanController.updatedata(req.body, req.params.id)
+            .then((result) => {
+                res.json(result)
+            }).catch((err) => {
+                res.json(err)
+            })
+    })
+
+    router.post('/kendaraan/mutasi/:id', fields, async (req, res) => {
+        kendaraanController.mutasi(req.body, req.params.id)
             .then(() => {
                 res.json({
                     error: false

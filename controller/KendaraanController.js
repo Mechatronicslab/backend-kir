@@ -163,6 +163,23 @@ exports.updatedata = (data, id) =>
         })
     })
 
+exports.mutasi = (data, id) =>
+    new Promise((resolve, reject) => {
+        Kendaraan.updateOne({
+            _id: id
+        }, data).then(() => {
+            resolve({
+                error: false,
+                message: 'Berhasil Mutasi Kendaraan'
+            })
+        }).catch(() => {
+            resolve({
+                error: false,
+                message: 'Gagal Mutasi Kendaraan'
+            })
+        })
+    })
+
 exports.getdetail = (id) =>
     new Promise((resolve, reject) => {
         Kendaraan.aggregate([
