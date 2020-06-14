@@ -5,16 +5,16 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 const router = express.Router({ mergeParams: true });
 const port = process.env.PORT || 5100;
-const http = require('https');
+const http = require('http');
 const fs = require('fs')
 const cors = require('cors');
 const path =require('path')
-let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
-let certificate = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\cert.pem', 'utf8')
-let credentials = { key: privateKey, cert: certificate }
-const server = http.createServer(credentials, app)
+// let privateKey  = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\key.pem', 'utf8')
+// let certificate = fs.readFileSync('D:\\pptikCSR\\Certificate Rumah Web\\cert.pem', 'utf8')
+// let credentials = { key: privateKey, cert: certificate }
+// const server = http.createServer(credentials, app)
 // user middleware
-// const server = http.createServer(app)
+const server = http.createServer(app)
 const setUp = require('./setup')
 app.use(cors())
 // app.options('*', cors())
@@ -24,6 +24,7 @@ require('./routes/Kendaraan')(router)
 require('./routes/User')(router)
 require('./routes/administrasi')(router)
 require('./routes/Transaksi')(router)
+require('./routes/datauji')(router)
 // app.use("/static/",express(path.join(__dirname,"static")))
 // app.use(express.static('static'))
 const directory = path.join(__dirname, '/static')
