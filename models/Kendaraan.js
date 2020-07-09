@@ -1,210 +1,56 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const kendaraan = new Schema({
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
+  jeniskaroseri:String,
+  bahankaroseri: String,
+  banyaktempatduduk: String,
+  banyaktempatberdiri:String,
+  warnatnbk: String,
+  nouji: String,
+  nama: String,
+  alamat: String,
+  noidentitaspemilik: String,
+  nosertifikatreg: String,
+  tglsertifikatreg: String,
+  noregistrasikendaraan: String,
+  norangka: String,
+  nomesin: String,
+  merek: String,
+  tipe: String,
+  jenis: String,
+  thpembuatan: String,
+  bahanbakar: String,
+  isisilinder: String,
+  dayamotorpenggerak: String,
+  jbb: String,
+  jbkb: String,
+  jbi: String,
+  jbki: String,
+  mst: String,
+  beratkosong: String,
+  konfigurasisumburoda: String,
+  panjangkendaraan: String,
+  lebarkendaraan: String,
+  tinggikendaraan: String,
+  panjangbakatautangki: String,
+  lebarbakatautangki: String,
+  tinggibakatautangki: String,
+  julurdepan: String,
+  julurbelakang: String,
+  jaraksumbu1_2: String,
+  jaraksumbu2_3: String,
+  jaraksumbu3_4: String,
+  dayaangkutorang: String,
+  dayaangkutbarang: String,
+  kelasjalanterendah: String,
+  created_at: {
+    type: Date,
+    default: new Date().toISOString(),
+  },
+});
 
-const KendaraanScehma = new Schema({
-    noKendaraan: {
-        type: String,
-        default: ''
-    },
-    merk: {
-        type: String,
-        default: ''
-    },
-    type: {
-        type: String,
-        default: ''
-    },
-    jenisPeruntukan: {
-        type: String
-    },
-    tahunPembuatan: {
-        type: String,
-        default: 0
-    },
-    tahunPenggunaan: {
-        type: String,
-        default: 0
-    },
-    nomorRangka: {
-        type: String,
-        default: ''
-    },
-    nomorMesin: {
-        type: String,
-        default: ''
-    },
-    nomorUji: {
-        type: String,
-        indexes: {
-            unique: true
-        }
-    },
-    tempatPengujian: {
-        type: String,
-        default: ''
-    },
-    tanggalTidakBerlaku: [{
-        idTransaksi: {
-            type: String,
-            default: null
-        },
-        date: {
-            type: Date
-        },
-        timeStamp: {
-            type: Date,
-            default: new Date().toLocaleDateString()
-        }
-    }],
-    namaPemilikKendaraan: {
-        type: String,
-        default: ''
-    },
-    alamatPerusahaan: {
-        type: String,
-        default: ''
-    },
-    jarakSumbu: {
-        type: Number,
-        default: 0
-    },
-    panjangTotal: {
-        type: Number,
-        default: 0
-    },
-    lebarTotal: {
-        type: Number,
-        default: 0
-    },
-    tinggiTotal: {
-        type: Number,
-        default: 0
-    },
-    jenisKaroseri: {
-        type: String,
-        default: ''
-    },
-    bahanKaroseri: {
-        type: String,
-        default: ''
-    },
-    jumlahTempatDuduk: {
-        type: Number,
-        default: 0
-    },
-    jumlahTempatBerdiri: {
-        type: Number,
-        default: 0
-    },
-    keterangan: {
-        type: String,
-        default: ''
-    },
-    jbbs: {
-        type: JSON,
-        default: []
-    },
-    bkks: {
-        type: JSON,
-        default: []
-    },
-    dayaOrang: {
-        type: Number,
-        default: 0
-    },
-    dayaBarang: {
-        type: Number,
-        default: 0
-    },
-    jb: {
-        type: Number,
-        default: 0
-    },
-    mst: {
-        type: Number,
-        default: 0
-    },
-    bans: {
-        type: JSON,
-        default: []
-    },
-    roh: {
-        type: Number,
-        default: 0
-    },
-    foh: {
-        type: Number,
-        default: 0
-    },
-    pBak: {
-        type: Number,
-        default: 0
-    },
-    lBak: {
-        type: Number,
-        default: 0
-    },
-    tBak: {
-        type: Number,
-        default: 0
-    },
-    vSil: {
-        type: Number,
-        default: 0
-    },
-    date: [{
-        idTransaksi: {
-            type: String,
-            default: null
-        },
-        date: {
-            type: Date
-        },
-        timeStamp: {
-            type: Date,
-            default: new Date().toLocaleDateString()
-        }
-    }],
-    srut: {
-        type: String,
-        default: ''
-    },
-    bahanBakar: {
-        type: String,
-        default: ''
-    },
-    dayaAngkutOrang: {
-        type: String,
-        default: ''
-    },
-    jenis: {
-        type: String,
-        default: ''
-    },
-    tampakDepan: {
-        type: String,
-        default: ''
-    },
-    tampakBelakang: {
-        type: String,
-        default: ''
-    },
-    tampakKanan: {
-        type: String,
-        default: ''
-    },
-    tampakKiri: {
-        type: String,
-        default: ''
-    },
-    deleted: {
-        type: Boolean,
-        default: false
-    },
-    timeStamp: {
-        default: new Date().toLocaleDateString(),
-        type: Date
-    }
-})
-
-module.exports = mongoose.model('e__kendaraan', KendaraanScehma)
+module.exports = mongoose.model("kendaraan", kendaraan);

@@ -1,0 +1,206 @@
+
+kendaraan: {
+    hanyaKendaraan: true,
+    noKendaraan:  sadf ,
+    merk:  YAMAHA ,
+    type:  df ,
+    jenisPeruntukan:  KENDARAAN KHUSUS - UMUM ,
+    tahunPembuatan:  2018 ,
+    tahunPenggunaan:  2018 ,
+    nomorRangka:  sdfsdf ,
+    :  sdfsdf ,
+    jarakSumbu:   ,
+    nomorUji:  sdfsdf ,
+    tempatPengujian:  dsf ,
+    namaPemilikKendaraan:  sdf ,
+    alamatPerusahaan:  sdf ,
+    panjangTotal:   ,
+    lebarTotal:   ,
+    tinggiTotal:   ,
+    jenisKaroseri:   ,
+    bahanKaroseri:   ,
+    jumlahTempatDuduk:   ,
+    jumlahTempatBerdiri:   ,
+    keterangan:   ,
+    jbbs: [ [Object] ],
+    bkks: [ [Object] ],
+    dayaOrang:   ,
+    dayaBarang:   ,
+    jb:   ,
+    mst:   ,
+    bans: [ [Object] ],
+    roh:   ,
+    foh:   ,
+    pBak:   ,
+    tanggalTidakBerlaku: { date:  2020/06/24  },
+    lBak:   ,
+    tBak:   ,
+    vSil:   ,
+    date: { date:  2020/06/16  },
+    srut:   ,
+    bahanBakar:   ,
+    dayaAngkutOrang:   ,
+    jenis:   ,
+    umur:   
+  }
+
+  {
+      idx : auto,
+      statuspenerbitan: jenisPengujian ,
+      nouji : nomorUji,
+      nama : namaPemilikKendaraan,
+      alamat : alamatPerusahaan,
+      noidentitaspemilik: blom ada ,
+      nosertifikatreg : tanya pak ardi ,
+      tglsertifikatreg : tanya pak ardi ,
+      noregistrasikendaraan : blom tau ,
+        norangka : nomorRangka,
+  nomesin : 
+  merek  : merk
+  tipe  : type
+  jenis  : (jenis peruntukan / jenis  aja)
+  thpembuatan  : tahunPembuatan
+  bahanbakar : bahanBakar
+    sisilinder: vSil,
+    dayamotorpenggerak : blom ada ,
+    jbb : jbbs
+    jbkb : blom tau
+    jbi : jb
+    jbki : blom tau
+    mst :mst
+    beratkosong : bkks
+    konfigurasisumburoda : blom tau
+    ukuranban : bans
+    panjangkendaraan : panjangTotal
+    lebarkendaraan : lebarTotal
+    tinggikendaraan : tinggiTotal
+    panjangbakatautangki : pBak
+    lebarbakatautangki : lBak
+    tinggibakatautangki : tBak
+    julurdepan : blom tau
+    julurbelakang : blom tau
+    jaraksumbu1_2 : (jarakSumbu)
+    jaraksumbu2_3 : (jarakSumbu)
+    jaraksumbu3_4 : (jarakSumbu)
+    dayaangkutorang : orang
+    dayaangkutbarang : barang
+    kelasjalanterendah : blom tau
+    fotodepansmall : file
+    fotobelakangsmall : file 
+    fotokanansmall : file
+    fotokirismall : file
+    idpetugasuji: otomatis
+    idkepaladinas: otomatis
+    iddirektur	: otomatis
+    kodewilayah : otomatis
+    kodewilayahasal : otomatis
+ {
+    huv_nomordankondisirangka :
+    huv_nomordantipemotorpenggerak
+    huv_kondisitangkicorongdanpipabahanbakar
+    huv_kondisiconverterkit
+    huv_kondisidanposisipipapembuangan
+    huv_ukurandankondisiban
+    huv_kondisisistemsuspensi	
+    huv_kondisisistemremutama	
+    huv_kondisipenutuplampudanalatpantulcahaya	
+    huv_kondisipanelinstrumentdashboard	huv_kondisikacaspion
+    huv_kondisispakbor
+    huv_bentukbumper	
+    huv_keberadaandankondisiperlengkapan	
+    huv_rancanganteknis	
+    huv_keberadaandankondisifasilitastanggapdaruratuntukmobilbus	
+    huv_kondisibadankacaengseltempatdudukmbarangbakmuatantertutup	
+    hum_kondisipenerusdaya	
+    hum_sudutbebaskemudi	
+    hum_kondisiremparkir	
+    hum_fungsilampudanalatpantulcahaya	
+    hum_fungsipenghapuskaca	
+    hum_tingkatkegelapankaca	
+    hum_fungsiklakson	
+    hum_kondisidanfungsisabukkeselamatan	
+    hum_ukurankendaraan	hum_ukurantempatdudukdanbagiandalamkendaraanuntukmobilbus	
+    }
+    
+    alatuji_emisiasapbahanbakarsolar	: solar
+    alatuji_emisicobahanbakarbensin	 : co
+    alatuji_emisihcbahanbakarbensin	: hc
+
+    {   
+    alatuji_remutamatotalgayapengereman	
+    alatuji_remutamaselisihgayapengeremanrodakirikanan1	
+    alatuji_remutamaselisihgayapengeremanrodakirikanan2	
+    alatuji_remutamaselisihgayapengeremanrodakirikanan3	
+    alatuji_remutamaselisihgayapengeremanrodakirikanan4	
+    alatuji_remparkirtangan	alatuji_remparkirkaki	
+    alatuji_kincuprodadepan	alatuji_tingkatkebisingan	
+    alatuji_lampuutamakekuatanpancarlampukanan	
+    alatuji_lampuutamakekuatanpancarlampukiri	
+    alatuji_lampuutamapenyimpanganlampukanan	
+    alatuji_lampuutamapenyimpanganlampukiri	
+    alatuji_penunjukkecepatan	
+    alatuji_kedalamanalurban
+    } -> bakal ada nanti inputanya
+    qrcodeurl	: belum tau
+    qrnoujipm133	: belum tau
+    masaberlakuuji	: tanggal tidak berlaki - tanggal uji
+    tgluji	: date
+    statuslulusuji	: nanti ada inputanya
+    {
+    uid	: 
+    nokendalikartu	: 
+    datetimepersochip	: 
+    datetimepersovisual	
+    datetimecetaksertifikat	
+    datetimeupload	
+    vcode
+    } -> otomatis
+
+
+  }
+
+
+
+  catetan
+{
+  noidentitaspemilik: di buat form,
+  nosertifikatreg: srut,
+  tglsertifikatreg: tglsrut -> dibawah srut,
+  noregistrasikendaraan: no Plat,
+  tipe: tipe kendaraan,
+  jenis: jenis peruntukan -> di kita diganti jenis kendaraan,
+  dayamotorpenggerak: buat inputanya,
+  jbkb:di buat inputan -> jumlah berat kombinasi yang diperbolehkan,
+  jbki:di buat inputan -> jumlah berat kombinasi yang di izinkan,
+  beratkosong: berat kosong kendaraan -> ganti 1 inputan
+  konfigurasisumburoda: input manual,
+  ukuranban: ukuran ban teringan,
+  panjangbakatautangki: pbak -> tambah label tangki,
+  lebarbakatautangki: lbak,
+  tinggibakatautangki: tBak,
+  julurdepan: foh,
+  julurbelakang: roh,
+  jaraksumbu1_2: jarak sumbu -> ini maksudnya jarak sumbu 1 ke 2,
+  jaraksumbu2_3: jarak sumbu dari 2 ke 3 ,ini bisa kosong,
+  jaraksumbu3_4: jarak sumbu dari 3 ke 4 -> bisa kosong,
+  kelasjalanterendah: dibuatin select drop -> ['Kelas 1', 'Kelas 2', 'Kelas 3A', 'Kelas 3B'],
+  huv_* dan hum_*-> radio ['Baik', 'Tidak Baik'], 
+  kecuali 
+  huv_keberadaandankondisifasilitastanggapdaruratuntukmobilbus: ['ada'. 'tidak ada'],
+  semua alat uji diisi,
+  masaberlakuuji: 6 bulan,
+  statuslulusuji: buatin inputanya
+}
+
+rev {
+  jbb: itu satu value bukan array
+}
+
+1 Daftar Baru -> uji pertama
+2 Perpanjangan -> uji berkala
+3 Penggantian karena rusak -> buat
+4 Penggantian karena hilang -> buat
+5 Numpang uji (masuk) -> nomor surat numpang uju dari daerah domisili
+6 Mutasi (masuk) -> seperti uji pertama, tapi dia udah punya nomer uji
+
+di uji berkala & numpang uji -> huv_*, hum_*, alat_uji_*

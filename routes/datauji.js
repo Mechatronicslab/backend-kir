@@ -10,7 +10,4 @@ module.exports = router => {
                 res.json(err)
             })
     })
-
-    
-
 }
