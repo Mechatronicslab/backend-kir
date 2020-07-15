@@ -22,3 +22,26 @@ exports.getPengujian = () =>
         reject(requestResponse.common_error);
       });
   });
+
+
+  exports.getPengujianById = (id) =>
+  new Promise(async (resolve, reject) => {
+    await Pengujian.aggregate([
+      { $match : { _id : ObjectId(id) } },
+      {
+        $lookup: {
+          from: "kendaraans",
+          localField: "nouji",
+          foreignField: "nouji",
+          as: "kendaraan",
+        },
+      },
+    ])
+      .then(async (result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(requestResponse.common_error);
+      });
+  });
