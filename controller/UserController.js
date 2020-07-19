@@ -13,7 +13,8 @@ exports.login = async(data) =>
                     const dataUser = {
                         id: res._id,
                         username: res.username,
-                        role: res.role
+                        role: res.role,
+                        nama : res.nama
                     }
                     let token = jwt.sign(dataUser, process.env.SECRET_KEY,{
                         expiresIn: '1440m'

@@ -5,6 +5,7 @@ const kendaraan = new Schema({
     type: Boolean,
     default: false,
   },
+  ukuranban: String,
   jeniskaroseri:String,
   bahankaroseri: String,
   banyaktempatduduk: String,
