@@ -7,18 +7,8 @@ const Schema = mongoose.Schema({
         }        
     },
     administrasi: Number,
-    jasaUji:
-        [{
-            jenisKendaraan: String,
-            harga: Number
-        }],
-    buktiLulusUji: {
-        bukuKir: Number,
-        stiker: Number,
-        tandaUji: Number,
-        pengetokanNoUji: Number,
-        pengecetanTandaSamping: Number,
-    },
+    jasaUji:Number,
+    buktiLulusUji: Number,
     timeStamp: {
         default: new Date().toLocaleDateString(),
         type: Date

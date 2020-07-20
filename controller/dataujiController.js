@@ -26,7 +26,7 @@ exports.getDataUjiByNoUji = (nouji) => new Promise(async (resolve, reject) => {
 
 exports.create = (data) => new Promise(async (resolve, reject) => {
     await datauji
-        .create(data)
+        .updateOne({nouji : data.nouji},data, {upsert: true})
         .then((result) => {
             resolve(requestResponse.common_success);
         })
