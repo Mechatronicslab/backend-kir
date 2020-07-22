@@ -45,6 +45,14 @@ const requestResponse = {
     rc: '0000',
     message: 'Berhasil memuat permintaaan'
   },
+  suksesWithData: (data) => {
+    return {
+      error: false,
+      rc: '0000',
+      message: 'Berhasil memuat permintaaan',
+      data: data
+    }
+  },
   account_not_found: {
     error: true,
     rc: '401',

@@ -15,7 +15,7 @@ exports.getPengujian = () =>
       },
     ])
       .then(async (result) => {
-        resolve(result);
+        resolve(requestResponse.suksesWithData(result));
       })
       .catch((err) => {
         console.log(err);

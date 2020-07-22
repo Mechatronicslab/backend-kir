@@ -7,11 +7,10 @@ const ObjectId = require("mongoose").Types.ObjectId;
 exports.create = (kendaraan) => new Promise(async (resolve, reject) => {
     await Kendaraan
         .create(kendaraan)
-        .then(async () => {
-            requestResponse.common_success
+        .then(() => {
+            resolve(requestResponse.common_success)
         })
         .catch((err) => {
-            console.log(err);
             reject(requestResponse.common_error);
         });
 });
@@ -75,13 +74,15 @@ exports.getdata = () => new Promise((resolve, reject) => {
 
 exports.getdataById = (body) => new Promise(async (resolve, reject) => {
     await Kendaraan
-        .find(body)
+        .findOne({
+            nouji: body.nouji
+        })
         .then(async (kendaraan) => {
-            if (kendaraan.length > 0) {
+            if (kendaraan) {
                 await administrasi
-                    .findOne({jenisPengujian: "Uji Berkala"})
+                    .findOne({jenisPengujian: body.jenis})
                     .then(async (result) => {
-                        let data = Object.assign({kendaraan: kendaraan[0], administrasi: result});
+                        let data = Object.assign({kendaraan: kendaraan, administrasi: result});
                         resolve(data);
                     })
                     .catch((err) => {
@@ -99,15 +100,13 @@ exports.getdataById = (body) => new Promise(async (resolve, reject) => {
 exports.getdataByDate = (start, end) => new Promise((resolve, reject) => {
     let startDate = new Date(start);
     let endDate = new Date(end);
-    console.log(startDate + " - " + endDate);
     Kendaraan
         .find({
-            timeStamp: {
-                $gte: startDate
-            },
-            timeStamp: {
+            created_at: {
+                $gte: startDate,
                 $lte: endDate
-            }
+            },
+            deleted: false
         })
         .then((result) => {
             resolve(result);
@@ -118,28 +117,15 @@ exports.getdataByDate = (start, end) => new Promise((resolve, reject) => {
 });
 
 exports.updatedata = (data, id) => new Promise((resolve, reject) => {
-    let tanggalTidakBerlaku = data.tanggalTidakBerlaku;
-    let date = data.date;
-    delete data.tanggalTidakBerlaku;
-    delete data.date;
     Kendaraan
         .updateOne({
-            _id: id,
-            "tanggalTidakBerlaku._id": ObjectId(tanggalTidakBerlaku._id),
-            "date._id": ObjectId(date._id)
-        }, {
-            $set: {
-                data,
-                "tanggalTidakBerlaku.$.date": tanggalTidakBerlaku.date,
-                "date.$.date": date.date
-            }
-        })
+            _id: ObjectId(id)
+        }, data)
         .then((result) => {
-            console.log(result);
-            resolve(result);
+            resolve(requestResponse.common_success)
         })
-        .catch((err) => {
-            console.log(err);
+        .catch(() => {
+            console.log(requestResponse.common_error)
         });
 });
 
@@ -157,31 +143,38 @@ exports.mutasi = (data, id) => new Promise((resolve, reject) => {
 });
 
 exports.getdetail = (id) => new Promise((resolve, reject) => {
-    Kendaraan
-        .aggregate([
-            {
-                $match: {
-                    _id: ObjectId(id)
+    try {
+        Kendaraan
+            .findOne({
+                _id: ObjectId(id)
+            })
+            .then((result) => {
+                if (result) {
+                    resolve(requestResponse.suksesWithData(result))
+                } else {
+                    reject(requestResponse.data_not_found)
                 }
-            },
-            // {     "$unwind": "$tanggalTidakBerlaku" }, {     "$sort": {
-            // "tanggalTidakBerlaku.date": -1     } }
-        ])
-        .then((result) => {
-            resolve(result[0]);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+            })
+            .catch((err) => {
+                reject(err)
+            })
+    } catch (e) {
+        reject(requestResponse.data_not_found)
+    }
 });
 
 exports.delete = (id) => new Promise((resolve, reject) => {
     Kendaraan
-        .deleteOne({_id: id})
-        .then((result) => {
-            resolve(result);
+        .updateOne({
+            _id: ObjectId(id)
+        },
+        {
+            deleted: true
         })
-        .catch((err) => {
-            console.log(err);
-        });
+        .then(() => {
+            resolve(requestResponse.common_success)
+        })
+        .catch(() => {
+            reject(requestResponse.common_error)
+        })
 });

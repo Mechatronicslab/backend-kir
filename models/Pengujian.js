@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const objectId = Schema.Types.ObjectId
 const pengujian = new Schema({
   no_plat : String ,
   no_surat_numpanguji : String,
@@ -68,7 +69,9 @@ const pengujian = new Schema({
   created_at: {
       type: Date,
       default: new Date().toISOString()
-  }
+  },
+  idAdministrasi: objectId(),
+  total: Number
 });
 
 module.exports = mongoose.model("pengujian", pengujian);

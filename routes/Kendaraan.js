@@ -21,7 +21,6 @@ const fields = uploadSetting
     ]);
 module.exports = (router) => {
     router.post("/kendaraan/create", async (req, res) => {
-        console.log(req.body)
         kendaraanController
             .create(req.body)
             .then((result) => {
@@ -65,24 +64,20 @@ module.exports = (router) => {
     router.get("/kendaraan/getdetail/:id", async (req, res) => {
         kendaraanController
             .getdetail(req.params.id)
-            .then((result) => {
-                res.json(result);
-            })
-            .catch((err) => {
-                res.json(err);
-            });
-    });
+            .then((result) => res.json(result))
+            .catch((err) => res.json(err))
+    })
 
     router.post("/kendaraan/updatedata/:id", fields, async (req, res) => {
         kendaraanController
             .updatedata(req.body, req.params.id)
             .then((result) => {
-                res.json(result);
+                res.json(result)
             })
             .catch((err) => {
-                res.json(err);
-            });
-    });
+                res.json(err)
+            })
+    })
 
     router.post("/kendaraan/mutasi/:id", fields, async (req, res) => {
         kendaraanController
@@ -98,11 +93,11 @@ module.exports = (router) => {
     router.post("/kendaraan/delete/:id", async (req, res) => {
         kendaraanController
             .delete(req.params.id)
-            .then(() => {
-                res.json({error: false});
+            .then((result) => {
+                res.json(result)
             })
-            .catch(() => {
-                res.json({error: true});
+            .catch((e) => {
+                res.json(e)
             });
     });
 };
