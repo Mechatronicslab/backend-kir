@@ -22,6 +22,13 @@ module.exports = (router) => {
         res.json(err);
       });
   });
+
+  router.post('/pengujianBydate/', async (req, res) => {
+    console.log(req.body)
+    await pengujianController.getPengujianByDate(req.body)
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
+})
 };
 
 

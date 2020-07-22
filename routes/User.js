@@ -22,4 +22,13 @@ module.exports = router => {
             })
     })
 
+    router.get('/kodewilayah/', (req, res) => {
+        userController.getKodeWilayah()
+            .then(result => {
+                res.json(result)
+            }).catch(err => {
+                res.json(err)
+            })
+    })
+
 }
