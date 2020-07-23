@@ -6,11 +6,11 @@
 
     "database": {
         "development": {
-            "uri": "mongodb://jancok:12345@192.168.43.244:27017/Royal"
+            "uri": "xxxxx"
         },
         "production": {
-            "uri": "mongodb://kirDB:DBkirzxc123@dbmongo.server.pptik.id:27017/kirDB",
-            "local": "mongodb://localhost:27017/kir"
+            "uri": "mongodb://xxx:xxx@xxx.xx.xx.xx:27017/xx",
+            "local": "mongodb://localhost:27017/xx"
         }
 
     }
