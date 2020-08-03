@@ -16,7 +16,8 @@ let credentials = {
     cert: certificate
 }
 const server = http.createServer(credentials, app)
-const server = http.createServer(app)
+
+// const server = http.createServer(app)
 const setUp = require('./setup')
 app.use(cors())
 // app.options('*', cors()) const middleware = require('./middleware/Auth').auth
