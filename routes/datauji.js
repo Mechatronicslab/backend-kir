@@ -1,7 +1,6 @@
 const dataujiController = require("../controller/dataujiController");
 const multer = require("multer");
 const uploadSetting = require("../config/uploadSetting");
-const FTPConfig = require("../config/FTPConfig");
 const fields = uploadSetting
     .upload
     .fields([
