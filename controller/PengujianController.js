@@ -28,7 +28,7 @@ exports.getPengujianByDate = async (data) => new Promise((resolve, reject) => {
         .aggregate([
             {
                 $match: {
-                    created_at: {
+                    tgluji: {
                         "$gte": new Date(data.startDate),
                         "$lte": new Date(data.endDate)
                     }

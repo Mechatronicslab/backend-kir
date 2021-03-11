@@ -28,6 +28,7 @@ require('./routes/administrasi')(router)
 require('./routes/Transaksi')(router)
 require('./routes/datauji')(router)
 require('./routes/pengujian')(router)
+require('./routes/aplikasiblue')(router)
 // app.use("/static/",express(path.join(__dirname,"static")))
 // app.use(express.static('static'))
 const directory = path.join(__dirname, '/static')
@@ -52,11 +53,10 @@ async function onListening() {
             ? 'pipe ' + addr
             : 'port ' + addr.port;
         setUp
-            .dbConnect()
+            .dbConnect().then((dbmysql) => {app.set("dbmysql", dbmysql);})
             .catch(err => {
                 console.log('mongo error :' + err)
             })
-            //app.database = database
             console
             .log('Listening on ' + bind)
         //debug('Listening on ' + bind);
