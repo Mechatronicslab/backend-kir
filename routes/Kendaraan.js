@@ -49,6 +49,17 @@ module.exports = (router) => {
             });
     });
 
+    router.get("/kendaraan/ujiberkala", async (req, res) => {
+        kendaraanController
+            .searchKendaraan(req.query.filter)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    });
+
     router.post("/kendaraan/getdataByDate", async (req, res) => {
         kendaraanController
             .getdataByDate(req.body.start, req.body.end)

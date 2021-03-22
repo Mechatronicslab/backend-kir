@@ -2,7 +2,7 @@ const Kendaraan = require("../models/Kendaraan");
 const Pengujian = require("../models/Pengujian");
 const administrasi = require("../models/Administrasi");
 const transaksi = require("../models/Transaksi");
-const {requestResponse, generateIdTransaksi} = require("../setup");
+const { requestResponse, generateIdTransaksi } = require("../setup");
 const ObjectId = require("mongoose").Types.ObjectId;
 exports.create = (kendaraan) => new Promise(async (resolve, reject) => {
     await Kendaraan
@@ -26,7 +26,7 @@ exports.numpangUji = (data) => new Promise((resolve, reject) => {
         .create(data.transaksi)
         .then(() => {
             Kendaraan
-                .findOne({nomorUji: data.kendaraan.nomorUji})
+                .findOne({ nomorUji: data.kendaraan.nomorUji })
                 .then((res) => {
                     if (res === null) {
                         Kendaraan
@@ -63,7 +63,7 @@ exports.numpangUji = (data) => new Promise((resolve, reject) => {
 
 exports.getdata = () => new Promise((resolve, reject) => {
     Kendaraan
-        .find({deleted: false})
+        .find({ $or: [{ deleted: null }, { deleted: false }] })
         .then((result) => {
             resolve(result);
         })
@@ -71,6 +71,20 @@ exports.getdata = () => new Promise((resolve, reject) => {
             reject(err);
         });
 });
+
+exports.searchKendaraan = (filter) => new Promise((resolve, reject) => {
+    Kendaraan
+        .find({ nouji: { $regex: new RegExp("^" + filter.toLowerCase(), "i") } })
+        .limit(20)
+        .sort({ _id: -1 })
+        .then((result) => {
+            resolve(result);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+});
+
 
 exports.getdataById = (body) => new Promise(async (resolve, reject) => {
     await Kendaraan
@@ -80,9 +94,9 @@ exports.getdataById = (body) => new Promise(async (resolve, reject) => {
         .then(async (kendaraan) => {
             if (kendaraan) {
                 await administrasi
-                    .findOne({jenisPengujian: body.jenis})
+                    .findOne({ jenisPengujian: body.jenis })
                     .then(async (result) => {
-                        let data = Object.assign({kendaraan: kendaraan, administrasi: result});
+                        let data = Object.assign({ kendaraan: kendaraan, administrasi: result });
                         resolve(data);
                     })
                     .catch((err) => {
@@ -135,10 +149,10 @@ exports.mutasi = (data, id) => new Promise((resolve, reject) => {
             _id: id
         }, data)
         .then(() => {
-            resolve({error: false, message: "Berhasil Mutasi Kendaraan"});
+            resolve({ error: false, message: "Berhasil Mutasi Kendaraan" });
         })
         .catch(() => {
-            resolve({error: false, message: "Gagal Mutasi Kendaraan"});
+            resolve({ error: false, message: "Gagal Mutasi Kendaraan" });
         });
 });
 
@@ -168,9 +182,9 @@ exports.delete = (id) => new Promise((resolve, reject) => {
         .updateOne({
             _id: ObjectId(id)
         },
-        {
-            deleted: true
-        })
+            {
+                deleted: true
+            })
         .then(() => {
             resolve(requestResponse.common_success)
         })

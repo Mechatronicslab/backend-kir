@@ -1,10 +1,10 @@
 const datauji = require("../models/datauji");
-const {requestResponse, generateIdTransaksi} = require("../setup");
+const {requestResponse, knex} = require("../setup");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 exports.getDataUji = () => new Promise(async (resolve, reject) => {
     await datauji
-        .find()
+        .find().sort({_id : -1})
         .then((result) => {
             resolve(result);
         })
@@ -25,6 +25,7 @@ exports.getDataUjiByNoUji = (nouji) => new Promise(async (resolve, reject) => {
 });
 
 exports.create = (data) => new Promise(async (resolve, reject) => {
+    console.log(data)
     await datauji
         .updateOne({nouji : data.nouji},data, {upsert: true})
         .then((result) => {
@@ -34,3 +35,5 @@ exports.create = (data) => new Promise(async (resolve, reject) => {
             reject(err);
         });
 });
+
+
