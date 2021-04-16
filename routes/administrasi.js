@@ -26,4 +26,11 @@ module.exports = router => {
             .catch(err => res.json(err))
     })
 
+    router.get('/administrasi/get/:id', async (req, res) => {
+        // console.log(req.params.jenisPengujian.replace('%20', ' '))
+        await controller.getAdministrasiById(req.params.id)
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
+    })
+
 }

@@ -48,3 +48,16 @@ exports.getAdministrasi = async (jenisPengujian) =>
             .then(res => resolve(res))
             .catch(() => reject(requestResponse.common_error))
     })
+
+
+exports.getAdministrasiById = async (_id) =>
+    await new Promise(async (resolve, reject) => {
+        if (_id === '' || _id === null) {
+            reject(requestResponse.common_error)
+        }
+        await model.findOne({
+            _id: ObjectId(_id)
+        })
+            .then(res => resolve(res))
+            .catch(() => reject(requestResponse.common_error))
+    })
