@@ -2,8 +2,11 @@ const pengujianController = require("../controller/PengujianController");
 
 module.exports = (router) => {
   router.get("/pengujian/", async (req, res) => {
+    let filter = req.query.keyword
+    let page = req.query.page
+    let resPerPage = req.query.rowsPerPage
     pengujianController
-      .getPengujian()
+      .getPengujianPaginate(Number(page), Number(resPerPage), filter)
       .then((result) => {
         res.json(result);
       })
@@ -42,7 +45,7 @@ module.exports = (router) => {
   })
 
   router.delete('/pengujian/:_id/:nouji', async (req, res) => {
-    await pengujianController.deletePengujian(req.params._id , req.params.nouji)
+    await pengujianController.deletePengujian(req.params._id, req.params.nouji)
       .then(result => res.json(result))
       .catch(err => res.json(err))
   })

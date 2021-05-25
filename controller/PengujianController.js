@@ -24,6 +24,75 @@ exports.getPengujian = () => new Promise(async (resolve, reject) => {
         });
 });
 
+exports.getPengujianPaginate = (page, resPerPage, filter) =>
+    new Promise(async (resolve, reject) => {
+        if (filter === 'null') {
+            await Pengujian
+                .aggregate([
+                    { $match: { $or: [{ nouji: { $regex: ".*" } },{ statuspenerbitan: { $regex: ".*" } },] } },
+                    {
+                        $lookup: {
+                            from: "kendaraans",
+                            localField: "nouji",
+                            foreignField: "nouji",
+                            as: "kendaraan"
+                        }
+                    }
+                ])
+                .skip(resPerPage * page - resPerPage)
+                .limit(resPerPage)
+                .sort({ _id: -1 })
+                .exec((err, result) => {
+                    if (err) {
+                        return requestResponse.common_error
+                    } else {
+                        Pengujian
+                            .aggregate([{ $group: { _id: null, totaldata: { $sum: 1 } } }])
+                            .exec((count_error, count) => {
+                                if (!count_error) {
+                                    resolve(requestResponse.commonSuccessDataPaginate(result, count[0].totaldata, page, resPerPage, filter))
+
+                                } else {
+                                    reject(requestResponse.common_error)
+                                }
+                            })
+                    }
+                })
+        } else {
+            await Pengujian
+                .aggregate([
+                    { $match: { $or: [{ nouji: { $regex: new RegExp("^" + filter.toLowerCase(), "i") } },{ statuspenerbitan: Number(filter)},] } },
+                    {
+                        $lookup: {
+                            from: "kendaraans",
+                            localField: "nouji",
+                            foreignField: "nouji",
+                            as: "kendaraan"
+                        }
+                    }
+                ])
+                .skip(resPerPage * page - resPerPage)
+                .limit(resPerPage)
+                .sort({ _id: -1 })
+                .exec((err, result) => {
+                    if (err) {
+                        return requestResponse.common_error
+                    } else {
+                        Pengujian
+                            .aggregate([{ $group: { _id: null, totaldata: { $sum: 1 } } }])
+                            .exec((count_error, count) => {
+                                if (!count_error) {
+                                    resolve(requestResponse.commonSuccessDataPaginate(result, count[0].totaldata, page, resPerPage, filter))
+
+                                } else {
+                                    reject(requestResponse.common_error)
+                                }
+                            })
+                    }
+                })
+        }
+    });
+
 exports.getPengujianByDate = async (data) => new Promise((resolve, reject) => {
     Pengujian
         .aggregate([
@@ -77,7 +146,7 @@ exports.getPengujianById = (id) => new Promise(async (resolve, reject) => {
 });
 
 exports.pengujianTerakhir = (nouji) => new Promise((resolve, reject) => {
-    Pengujian.findOne({nouji : nouji}).sort({_id : -1 })
+    Pengujian.findOne({ nouji: nouji }).sort({ _id: -1 })
         .then((result) => {
             console.log(result)
             resolve(requestResponse.suksesWithData(result));
@@ -87,7 +156,7 @@ exports.pengujianTerakhir = (nouji) => new Promise((resolve, reject) => {
             reject(requestResponse.common_error);
         });
 });
-exports.deletePengujian = (_id,nouji) => new Promise((resolve, reject) => {
+exports.deletePengujian = (_id, nouji) => new Promise((resolve, reject) => {
     Pengujian
         .deleteOne({ _id: ObjectId(_id) })
         .then(res => {

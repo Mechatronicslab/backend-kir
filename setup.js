@@ -97,6 +97,28 @@ const requestResponse = {
     rc: "0030",
     message: "Akses ditolak! Sesi Anda telah berakhir atau tidak valid",
   },
+  commonSuccessDataPaginate: (data, total, current_page, per_page, filter) => {
+    let message, result
+    if (data === null) {
+      message = 'Tidak Ada Data'
+      result = []
+    } else {
+      message = 'Berhasil Memuat Permintaan'
+      result = data
+    }
+    return {
+      status: true,
+      rc: '0000',
+      message: message,
+      result: result,
+      paginate: {
+        rowsNumber: total,
+        page: current_page,
+        rowsPerPage: per_page,
+        filter: filter
+      }
+    }
+  }
 };
 
 module.exports = {

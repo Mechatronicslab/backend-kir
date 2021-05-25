@@ -21,8 +21,12 @@ const fields = uploadSetting
 
 module.exports = (router) => {
     router.get("/datauji/", (req, res) => {
+        let filter = req.query.keyword
+        let page = req.query.page
+        let resPerPage = req.query.rowsPerPage
+        console.log(filter)
         dataujiController
-            .getDataUji()
+            .getDataUjiPaginate(Number(page),Number(resPerPage),filter)
             .then((result) => {
                 res.json(result);
             })
