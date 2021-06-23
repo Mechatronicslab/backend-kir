@@ -26,6 +26,17 @@ module.exports = (router) => {
       });
   });
 
+  router.get("/generetNourut/:_id", async (req, res) => {
+    pengujianController
+      .generateNoUrut(req.params._id)
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  });
+
   router.get("/pengujianTerakhir/:nouji", async (req, res) => {
     pengujianController
       .pengujianTerakhir(req.params.nouji)

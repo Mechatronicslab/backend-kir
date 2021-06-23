@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId
 const pengujian = new Schema({
+  no_urut : Number , 
   no_plat : String ,
   no_surat_numpanguji : String,
   tglsurat : Date,

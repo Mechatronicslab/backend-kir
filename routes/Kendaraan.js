@@ -38,6 +38,20 @@ module.exports = (router) => {
             });
     });
 
+    router.get("/kendaraan/getPaginate", async (req, res) => {
+        let filter = req.query.keyword
+        let page = req.query.page
+        let resPerPage = req.query.rowsPerPage
+        kendaraanController
+          .getDataKendaraanPaginate(Number(page), Number(resPerPage), filter)
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      });
+
     router.post("/kendaraan/search", async (req, res) => {
         kendaraanController
             .getdataById(req.body)

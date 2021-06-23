@@ -72,6 +72,60 @@ exports.getdata = () => new Promise((resolve, reject) => {
         });
 });
 
+exports.getDataKendaraanPaginate = (page, resPerPage, filter) =>
+    new Promise(async (resolve, reject) => {
+        if (filter === 'null') {
+            await Kendaraan
+                .find({ $or: [{ deleted: null }, { deleted: false }] })
+                .skip(resPerPage * page - resPerPage)
+                .limit(resPerPage)
+                .sort({ _id: -1 })
+                .exec((err, result) => {
+                    if (err) {
+                        return requestResponse.common_error
+                    } else {
+                        Kendaraan
+                            .aggregate([{ $group: { _id: null, totaldata: { $sum: 1 } } }])
+                            .exec((count_error, count) => {
+                                if (!count_error) {
+                                    resolve(requestResponse.commonSuccessDataPaginate(result, count[0].totaldata, page, resPerPage, filter))
+
+                                } else {
+                                    reject(requestResponse.common_error)
+                                }
+                            })
+                    }
+                })
+        } else {
+            await Kendaraan
+                .find(
+                    {
+                        nouji: { $regex: new RegExp("^" + filter.toLowerCase(), "i") }, $or: [{ deleted: null }, { deleted: false }] 
+                    }
+                )
+                .skip(resPerPage * page - resPerPage)
+                .limit(resPerPage)
+                .sort({ _id: -1 })
+                .exec((err, result) => {
+                    if (err) {
+                        console.log(err)
+                        return requestResponse.common_error
+                    } else {
+                        Kendaraan
+                            .aggregate([{ $group: { _id: null, totaldata: { $sum: 1 } } }])
+                            .exec((count_error, count) => {
+                                if (!count_error) {
+                                    resolve(requestResponse.commonSuccessDataPaginate(result, count[0].totaldata, page, resPerPage, filter))
+
+                                } else {
+                                    reject(requestResponse.common_error)
+                                }
+                            })
+                    }
+                })
+        }
+    });
+
 exports.searchKendaraan = (filter) => new Promise((resolve, reject) => {
     Kendaraan
         .find({ nouji: { $regex: new RegExp("^" + filter.toLowerCase(), "i") } })
